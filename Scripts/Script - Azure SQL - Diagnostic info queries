@@ -1,0 +1,293 @@
+
+
+------------------ Azure SQL - Diagnostic info queries ------------
+
+
+
+-- SQL information for current database  (Query 1) (Version Info)
+		SELECT @@SERVERNAME AS [Server Name], @@VERSION AS [SQL Server Version Info];
+
+
+-- Get logical instance-level configuration values for instance  (Query 2) (Configuration Values)
+		SELECT 
+			name, value, value_in_use, minimum, maximum, [description], is_dynamic, is_advanced
+		FROM sys.configurations WITH (NOLOCK)
+			ORDER BY name OPTION (RECOMPILE);
+
+
+-- Azure SQL Database size  (Query 14) (Azure SQL DB Size)
+		SELECT CAST(SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.) / 1024 / 1024 AS DECIMAL(15,2)) AS [Database Size In MB],
+			   CAST(SUM(CAST(FILEPROPERTY(name, 'SpaceUsed') AS bigint) * 8192.) / 1024 / 1024 / 1024 AS DECIMAL(15,2)) AS [Database Size In GB]
+		FROM sys.database_files WITH (NOLOCK)
+		WHERE [type_desc] = N'ROWS' OPTION (RECOMPILE);
+------
+
+-- SQL Server NUMA Node information  (Query 3) (SQL Server NUMA Info)
+		SELECT osn.node_id, osn.node_state_desc, osn.memory_node_id, osn.processor_group, osn.cpu_count, osn.online_scheduler_count, 
+			   osn.idle_scheduler_count, osn.active_worker_count, 
+			   osmn.pages_kb/1024 AS [Committed Memory (MB)], 
+			   osmn.locked_page_allocations_kb/1024 AS [Locked Physical (MB)],
+			   CONVERT(DECIMAL(18,2), osmn.foreign_committed_kb/1024.0) AS [Foreign Commited (MB)],
+			   osmn.target_kb/1024 AS [Target Memory Goal (MB)],
+			   osn.avg_load_balance, osn.resource_monitor_state
+		FROM sys.dm_os_nodes AS osn WITH (NOLOCK)
+		INNER JOIN sys.dm_os_memory_nodes AS osmn WITH (NOLOCK)
+		ON osn.memory_node_id = osmn.memory_node_id
+		WHERE osn.node_state_desc <> N'ONLINE DAC' OPTION (RECOMPILE);
+
+-- DATABASES : info
+
+		-- Get a count of SQL connections by IP address (Query 7) (Connection Counts by IP Address)    
+		SELECT ec.client_net_address, es.[program_name], es.[host_name], es.login_name, 
+				COUNT(ec.session_id) AS [connection count] 
+		FROM sys.dm_exec_sessions AS es WITH (NOLOCK) 
+			INNER JOIN sys.dm_exec_connections AS ec WITH (NOLOCK) 
+			ON es.session_id = ec.session_id 
+			GROUP BY ec.client_net_address, es.[program_name], es.[host_name], es.login_name  
+			ORDER BY ec.client_net_address, es.[program_name] OPTION (RECOMPILE);
+
+		-- Log space usage for current database  (Query 16) (Log Space Usage)
+		SELECT DB_NAME(lsu.database_id) AS [Database Name], db.recovery_model_desc AS [Recovery Model],
+				CAST(lsu.total_log_size_in_bytes/1048576.0 AS DECIMAL(10, 2)) AS [Total Log Space (MB)],
+				CAST(lsu.used_log_space_in_bytes/1048576.0 AS DECIMAL(10, 2)) AS [Used Log Space (MB)], 
+				CAST(lsu.used_log_space_in_percent AS DECIMAL(10, 2)) AS [Used Log Space %],
+				CAST(lsu.log_space_in_bytes_since_last_backup/1048576.0 AS DECIMAL(10, 2)) AS [Used Log Space Since Last Backup (MB)],
+				db.log_reuse_wait_desc		 
+		FROM sys.dm_db_log_space_usage AS lsu WITH (NOLOCK)
+		INNER JOIN sys.databases AS db WITH (NOLOCK)
+		ON lsu.database_id = db.database_id
+		OPTION (RECOMPILE);
+
+		-- Look at log file size and usage, along with the log reuse wait description for the current database
+
+
+-- Get VLF Count for current database (Query 17) (VLF Counts)
+		SELECT [name] AS [Database Name], [VLF Count]
+		FROM sys.databases AS db WITH (NOLOCK)
+		CROSS APPLY (SELECT file_id, COUNT(*) AS [VLF Count]
+					 FROM sys.dm_db_log_info(db.database_id)
+					 GROUP BY file_id) AS li
+		WHERE [name] <> N'master'
+		ORDER BY [VLF Count] DESC OPTION (RECOMPILE);
+------
+
+		-- High VLF counts can affect write performance to the log file
+		-- and they can make full database restores and crash recovery take much longer
+		-- Try to keep your VLF counts under 200 in most cases (depending on log file size)
+
+-- Status of last VLF for current database  (Query 18) (Last VLF Status)
+		SELECT TOP(1) DB_NAME(li.database_id) AS [Database Name], li.[file_id],
+					   li.vlf_size_mb, li.vlf_sequence_number, li.vlf_active, li.vlf_status
+		FROM sys.dm_db_log_info(DB_ID()) AS li 
+		ORDER BY vlf_sequence_number DESC OPTION (RECOMPILE);
+
+
+
+-- Individual File Sizes and space available for current database  (Query 15) (File Sizes and Space)
+		SELECT 
+				f.name AS [File Name] , f.physical_name AS [Physical Name], 
+				CAST((f.size/128.0) AS DECIMAL(15,2)) AS [Total Size in MB],
+				CAST(f.size/128.0 - CAST(FILEPROPERTY(f.name, 'SpaceUsed') AS int)/128.0 AS DECIMAL(15,2)) 
+				AS [Available Space In MB], f.[file_id], fg.name AS [Filegroup Name],
+				f.is_percent_growth, f.growth, fg.is_default, fg.is_read_only, 
+				fg.is_autogrow_all_files
+		FROM sys.database_files AS f WITH (NOLOCK) 
+				LEFT OUTER JOIN sys.filegroups AS fg WITH (NOLOCK)
+				ON f.data_space_id = fg.data_space_id
+				ORDER BY f.[file_id] OPTION (RECOMPILE);
+
+-- Important database properties for current database   (Query 19) (Database Properties)
+		SELECT 
+		db.[name] AS [Database Name], db.recovery_model_desc AS [Recovery Model], 
+		db.state_desc, db.containment_desc, db.log_reuse_wait_desc AS [Log Reuse Wait Description], 
+		db.[compatibility_level] AS [DB Compatibility Level], 
+		db.is_mixed_page_allocation_on, db.page_verify_option_desc AS [Page Verify Option], 
+		db.is_auto_create_stats_on, db.is_auto_update_stats_on, db.is_auto_update_stats_async_on, db.is_parameterization_forced, 
+		db.snapshot_isolation_state_desc, db.is_read_committed_snapshot_on, db.is_auto_close_on, db.is_auto_shrink_on, 
+		db.target_recovery_time_in_seconds, db.is_cdc_enabled, db.is_memory_optimized_elevate_to_snapshot_on, 
+		db.delayed_durability_desc, db.is_query_store_on, db.is_temporal_history_retention_enabled,
+		db.is_accelerated_database_recovery_on, db.is_memory_optimized_enabled  
+		FROM sys.databases AS db WITH (NOLOCK)
+		WHERE db.[name] <> N'master'
+		ORDER BY db.[name] OPTION (RECOMPILE);
+
+
+-- Get recent resource usage (Query 22) (Recent Resource Usage)
+SELECT end_time, dtu_limit, cpu_limit, avg_cpu_percent, avg_memory_usage_percent, 
+       avg_data_io_percent, avg_log_write_percent,  xtp_storage_percent,
+       max_worker_percent, max_session_percent,  avg_login_rate_percent,  
+	   avg_instance_cpu_percent, avg_instance_memory_percent
+FROM sys.dm_db_resource_stats WITH (NOLOCK) 
+ORDER BY end_time DESC OPTION (RECOMPILE);
+
+
+
+-- When were Statistics last updated on all indexes?  (Query 42) (Statistics Update)
+SELECT SCHEMA_NAME(o.Schema_ID) + N'.' + o.[NAME] AS [Object Name], o.[type_desc] AS [Object Type],
+      i.[name] AS [Index Name], STATS_DATE(i.[object_id], i.index_id) AS [Statistics Date], 
+      s.auto_created, s.no_recompute, s.user_created, s.is_incremental, s.is_temporary,
+	  st.row_count, st.used_page_count
+FROM sys.objects AS o WITH (NOLOCK)
+INNER JOIN sys.indexes AS i WITH (NOLOCK)
+ON o.[object_id] = i.[object_id]
+INNER JOIN sys.stats AS s WITH (NOLOCK)
+ON i.[object_id] = s.[object_id] 
+AND i.index_id = s.stats_id
+INNER JOIN sys.dm_db_partition_stats AS st WITH (NOLOCK)
+ON o.[object_id] = st.[object_id]
+AND i.[index_id] = st.[index_id]
+WHERE o.[type] IN ('U', 'V')
+AND st.row_count > 0
+ORDER BY STATS_DATE(i.[object_id], i.index_id) DESC OPTION (RECOMPILE);
+
+-- Get geo-replication link status for all secondary databases (Query 56) (Geo-Replication Link Status)
+SELECT link_guid, partner_server, partner_database, last_replication, 
+       replication_lag_sec, replication_state_desc, role_desc, secondary_allow_connections_desc 
+FROM sys.dm_geo_replication_link_status WITH (NOLOCK) OPTION (RECOMPILE);
+
+
+-- Get Average Task Counts (run multiple times)  (Query 8) (Avg Task Counts)
+/*
+
+-- Sustained values above 10 suggest further investigation in that area (depending on your Service Tier)
+-- Avg Task Counts will be higher with lower service tiers
+-- High Avg Task Counts are often caused by blocking/deadlocking or other resource contention
+`
+-- Sustained values above 1 suggest further investigation in that area
+-- High Avg Runnable Task Counts are a good sign of CPU pressure
+-- High Avg Pending DiskIO Counts are a sign of disk pressure
+
+
+*/
+SELECT 
+	AVG(current_tasks_count) AS [Avg Task Count], 
+	AVG(work_queue_count) AS [Avg Work Queue Count],
+	AVG(runnable_tasks_count) AS [Avg Runnable Task Count],
+	AVG(pending_disk_io_count) AS [Avg Pending DiskIO Count]
+FROM sys.dm_os_schedulers WITH (NOLOCK)
+	WHERE scheduler_id < 255 OPTION (RECOMPILE);
+
+
+
+-- Detect blocking (run multiple times)  (Query 9) (Detect Blocking)						
+SELECT 
+		t1.resource_type AS [lock type], DB_NAME(resource_database_id) AS [database],
+		t1.resource_associated_entity_id AS [blk object],t1.request_mode AS [lock req],  -- lock requested
+		t1.request_session_id AS [waiter sid], t2.wait_duration_ms AS [wait time],       -- spid of waiter  
+			(SELECT [text] FROM sys.dm_exec_requests AS r WITH (NOLOCK)                      -- get sql for waiter
+			CROSS APPLY sys.dm_exec_sql_text(r.[sql_handle]) 
+			WHERE r.session_id = t1.request_session_id) AS [waiter_batch],
+			(SELECT SUBSTRING(qt.[text],r.statement_start_offset/2, 
+				(CASE WHEN r.statement_end_offset = -1 
+				THEN LEN(CONVERT(nvarchar(max), qt.[text])) * 2 
+				ELSE r.statement_end_offset END - r.statement_start_offset)/2) 
+FROM sys.dm_exec_requests AS r WITH (NOLOCK)
+		CROSS APPLY sys.dm_exec_sql_text(r.[sql_handle]) AS qt
+		WHERE r.session_id = t1.request_session_id) AS [waiter_stmt],					-- statement blocked
+		t2.blocking_session_id AS [blocker sid],										-- spid of blocker
+		(SELECT [text] FROM sys.sysprocesses AS p										-- get sql for blocker
+		CROSS APPLY sys.dm_exec_sql_text(p.[sql_handle]) 
+		WHERE p.spid = t2.blocking_session_id) AS [blocker_batch]
+		FROM sys.dm_tran_locks AS t1 WITH (NOLOCK)
+		INNER JOIN sys.dm_os_waiting_tasks AS t2 WITH (NOLOCK)
+		ON t1.lock_owner_address = t2.resource_address OPTION (RECOMPILE);
+
+
+
+-- Page Life Expectancy (PLE) value for each NUMA node in current instance  (Query 10) (PLE by NUMA Node)
+		SELECT @@SERVERNAME AS [Server Name], RTRIM([object_name]) AS [Object Name], 
+			   instance_name, cntr_value AS [Page Life Expectancy]
+		FROM sys.dm_os_performance_counters WITH (NOLOCK)
+		WHERE [object_name] LIKE N'%Buffer Node%' -- Handles named instances
+		AND counter_name = N'Page life expectancy' OPTION (RECOMPILE);
+
+
+
+-- Memory Clerk Usage for instance  (Query 12) (Memory Clerk Usage)
+-- Look for high value for CACHESTORE_SQLCP (Ad-hoc query plans)
+		SELECT 
+			TOP(10) mc.[type] AS [Memory Clerk Type], 
+				   CAST((SUM(mc.pages_kb)/1024.0) AS DECIMAL (15,2)) AS [Memory Usage (MB)] 
+		FROM sys.dm_os_memory_clerks AS mc WITH (NOLOCK)
+			GROUP BY mc.[type]  
+			ORDER BY SUM(mc.pages_kb) DESC OPTION (RECOMPILE);
+
+-- Find single-use, ad-hoc and prepared queries that are bloating the plan cache  (Query 13) (Ad hoc Queries)   
+		SELECT 
+				TOP(50) DB_NAME(t.[dbid]) AS [Database Name], t.[text] AS [Query Text], 
+				cp.objtype AS [Object Type], cp.cacheobjtype AS [Cache Object Type],  
+				cp.size_in_bytes/1024 AS [Plan Size in KB]
+		FROM sys.dm_exec_cached_plans AS cp WITH (NOLOCK)
+				CROSS APPLY sys.dm_exec_sql_text(plan_handle) AS t
+				WHERE cp.cacheobjtype = N'Compiled Plan' 
+				AND cp.objtype IN (N'Adhoc', N'Prepared') 
+				AND cp.usecounts = 1
+				ORDER BY cp.size_in_bytes DESC, DB_NAME(t.[dbid]) OPTION (RECOMPILE);
+
+
+
+-- Check Ongoing Issues using sys.dm_os_performance_counters
+SELECT *
+FROM sys.dm_os_performance_counters
+WHERE counter_name LIKE '%Errors%';
+
+-- CPU
+SELECT * FROM sys.dm_os_wait_stats WHERE wait_type LIKE '%CPU%';
+
+-- currently exec queries
+select  
+    r.session_id,  
+    s.login_name,  
+    c.client_net_address,  
+    s.host_name,  
+    s.program_name,  
+    st.text, s.status  
+from sys.dm_exec_requests r  
+inner join sys.dm_exec_sessions s  
+on r.session_id = s.session_id  
+left join sys.dm_exec_connections c  
+on r.session_id = c.session_id  
+outer apply sys.dm_exec_sql_text(r.sql_handle) st  
+where client_net_address is not null and text is not null and s.status = 'running'
+
+--long running queries with status: running
+
+SELECT 
+		session_id, start_time, status, command, total_elapsed_time, text
+FROM sys.dm_exec_requests
+		CROSS APPLY sys.dm_exec_sql_text(sql_handle)
+		 WHERE status = 'running'
+		ORDER BY total_elapsed_time DESC;
+
+
+-- Wait type & time
+
+SELECT session_id, wait_type, wait_time, blocking_session_id, text
+FROM 
+sys.dm_exec_requests
+    CROSS APPLY sys.dm_exec_sql_text(sql_handle)
+    WHERE wait_type IS NOT NULL
+    ORDER BY wait_time DESC;
+
+-- find blocking queries
+
+SELECT blocking_session_id, session_id, wait_type, wait_time, text
+FROM sys.dm_exec_requests
+    CROSS APPLY sys.dm_exec_sql_text(sql_handle)
+    WHERE blocking_session_id <> 0
+    ORDER BY blocking_session_id;
+
+-- Monitor Resource Usage
+
+SELECT session_id, command, cpu_time, reads, writes, logical_reads, text
+FROM sys.dm_exec_requests
+    CROSS APPLY sys.dm_exec_sql_text(sql_handle)
+    ORDER BY cpu_time DESC, reads DESC, logical_reads DESC;
+
+-- Understand Query Execution Plans\
+
+SELECT r.session_id, r.status, r.command, q.query_plan
+FROM sys.dm_exec_requests r
+    CROSS APPLY sys.dm_exec_query_plan(r.plan_handle) q
+    --WHERE r.session_id = @YourSessionId; -- Replace with the session ID of interest
+

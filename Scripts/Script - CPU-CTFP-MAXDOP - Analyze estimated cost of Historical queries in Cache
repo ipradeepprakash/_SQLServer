@@ -1,0 +1,37 @@
+-- Run this query in NON-BUSINESS Hrs, this will help understand the load happening & what could be value that should be set for CFTP / MAXDOP
+-- query result will have Query Text,Estimated cost & counts
+-- by taking avg of all the estimated counts, we can arrive at better CFTP values
+-- courtesy: Subbu CN via his https://www.youtube.com/watch?v=VUbaOkZOG8w&list=PLGYOqM3Nubh2YJ5SEMiS10PDEQbuDdFyf&index=94
+WITH XMLNAMESPACES (
+
+DEFAULT N'http://schemas.microsoft.com/sqlserver/2004/07/showplan'
+		)
+, TextPlans
+AS (SELECT CAST(detqp.query_plan AS XML) AS QueryPlan,
+		detqp.dbid
+		,t.text
+		,deqs.execution_count
+FROM sys.dm_exec_query_stats AS deqs
+CROSS APPLY sys.dm_exec_text_query_plan(
+			deqs.plan_handle,
+			deqs.statement_start_offset,
+			deqs.statement_end_offset
+						) AS detqp
+CROSS APPLY sys.dm_exec_sql_text(deqs.sql_handle) t
+
+),
+QueryPlans
+AS (SELECT RelOp.pln.value(N'@EstimatedTotalSubtreeCost', N'float') AS EstimatedCost,
+			RelOp.pln.value(N'@NodeId', N'integer') AS NodeId,
+			tp.dbid,
+			tp.QueryPlan,
+			tp.text,
+			tp.Execution_Count
+
+FROM TextPlans AS tp
+CROSS APPLY tp.queryplan.nodes(N'//RelOp')RelOp(pln)
+)
+SELECT qp.text, CONVERT(XML, QueryPlan) xml_query_plan, qp.EstimatedCost As Estimated_Query_Cost, qp.execution_count
+FROM QueryPlans AS qp
+WHERE qp.NodeId = 0;
+

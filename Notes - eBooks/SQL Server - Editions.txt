@@ -1,0 +1,39 @@
+
+-- SQL Server / Editions
+
+https://www.sqlshack.com/managing-sql-server-express-databases/
+Express edition:
+	- Free database
+	Applicable for 
+		○ Database : 10 GB size. Data file is restricted to 10 GB size, but log file does not have any restrictions. It can grow beyond 10 GB.
+		○ Memory : 1 GB size on instance level. Need to have optimal query for execution.
+		○ NO SQL Server Agent : No jobs for backups, index rebuild etc. have a script which does this.
+		○ No license cost.
+
+Enterprise edition :
+	- High-end data center capabilities with fast performances.
+	- Unlimited Virtualizations.
+	- Mission critical loads.
+	- End-to-end business intelligence.
+	
+Standard edition :
+	- Basic data management suitable for mid and small organizations for on-premises and cloud.
+
+Web edition :
+	- Low cost for web hosts and web VAPs.
+	- Suitable for small scale web properties.
+	
+Developer edition :
+	- License cost for developing applications & testing only, not for production.
+	- Has all enterprise features.
+
+
+
+
+
+
+
+
+
+
+

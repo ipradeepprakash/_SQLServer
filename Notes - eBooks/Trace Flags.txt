@@ -1,0 +1,40 @@
+# SQL Server: Trace Flags
+https://mohammaddarab.com/how-to-stop-delete-sql-server-trace/
+
+Trace flag in SQL server sets the specific characteristic of the server. It works as an "IF" condition for the SQL Server. The most common trace flags used with SQL Server are:
+
+
+The trace id is the id you find by doing a select * from sys.traces
+The status is either a 0, 1 or 2:
+	- 0 stops the trace, 
+	- 1 starts the trace, 
+	- 2 closes the specified trace and deletes its definition from the server. 
+
+How to delete a trace flag
+**********************
+Step1: find the trace id from : select * from sys.traces
+Step2: stop the trace by executing sp_trace_setstatus trace_id, 0 
+Step3: close/delete the trace by executing sp_trace_setstatus trace_id, 2.
+
+
+Below are some of trace flags used 
+*************************************
+	○ 1204, 1205, 1222: Deadlock Information: 
+	○ 1807: Network Database files
+	○ 4013: Log Record for Connections
+	○ 4022: Skip Startup Stored Procedures
+	○ 8755: Disable Locking Hints
+	○ 1118 (SQL 2005 and 2008): Force uniform extent allocations instead of mixed page allocations: 
+	○ 9481: enables legacy (old) cardinality estimation.
+	○ 3226: supress the successful msg for backup operations in error logs.
+	
+How to know what trace flags are enabled on instance?
+	DBCC TRACESTATUS(-1);
+	Go
+For current session, what is command to check what trace flags are enabled?
+	DBCC TRACESTATUS ();
+	Go
+	
+
+
+

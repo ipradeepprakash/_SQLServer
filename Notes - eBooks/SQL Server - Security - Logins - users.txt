@@ -1,0 +1,55 @@
+SQL Server: User & logins
+*********************************
+SQL Server Users and Logins
+	- https://www.youtube.com/watchv=BbJ3sK3M58o&list=PLD39sGUnQAJm2pS0GxDYRsFzbnr8gXNr9&index=5
+	- https://www.youtube.com/watch?v=uQf4CbX3il4
+
+SQL server Security:
+		○ Authentication modes
+		○ Server level roles
+		○ Database level roles
+		○ Service Account
+	
+		Authentication modes:
+			▪ Windows (active directory)
+			▪ Mixed-Mode
+
+		Server level roles:
+		SELECT * FROM sys.fn_builtin_permissions('SERVER') ORDER BY permission_name; 
+			▪ ALTER TRACE permission is required for user to run SQL profiler.
+		
+			1. Sysadmin: Members of the sysadmin fixed server role can perform any activity in the server.
+			2. Serveradmin: can change server-wide configuration options and shut down the server.
+			3. Securityadmin: can manage logins and their properties. I.e GRANT, DENY, REVOKE permissions at server level, also at database level if they have access.
+			4. Processadmin:  can end processes that are running on SQL Server instances.
+			5. Setupadmin: can add and remove linked servers by using Transact-SQL statements. 
+			6. Dbcreator: can create, alter, drop, and restore any database.
+			7. Bulkadmin: can run the BULK INSERT statement.
+			8. Diskadmin: can manage disk files.
+			9. Public: Every SQL Server login belongs to the public server role. Permissions can be granted as per requirement.
+	
+		Database level roles:
+			1. Dbowner: 
+			2. Data reader: 
+			3. Data writer: 
+			4. DDLadmin: 
+			5. BackupOperator: 
+			6. Accessadmin: 
+
+		Service account:
+			▪ Windows login responsible for running SQL services.
+		
+		Commands to add/drop users/login to server level access
+		
+		Command used to check current login authentication mode
+			> Exec master.sys.xp_loginconfig 'login mode'
+		
+		Add member to server role
+			> Alter server role <server_role_name>
+			     Add member <login_name>
+		
+		Drop member from server role
+			> Alter server role <server_role_name>
+			     Add member <login_name>
+		
+

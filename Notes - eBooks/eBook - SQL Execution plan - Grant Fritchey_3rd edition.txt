@@ -25,8 +25,6 @@ Chapter 17: SSMS Tools for Exploring Execution Plans
 ## ------------------------------------- Chapter 1: Introducing the Execution Plan -------------------------------------##
 
 
-
-
 ## What is the Execution plan?
 
 - Is a set of instructions devised by SQL server Optimizer to perform the result required by the end user.

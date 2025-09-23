@@ -1,0 +1,97 @@
+SQL Server: system databases
+****************************
+https://www.sqlshack.com/sql-server-system-databases-the-master-database/
+
+	- Master
+	- MSDB
+	- Model
+	- Tempdb
+	- Resource db
+
+Master:
+--------------- 
+	Records all instance level information like 
+		○ Logins, 
+		○ Location of database log files & data files, 
+		○ Accounts, 
+		○ Linked server, 
+		○ Instance level Configuration.
+		
+MSDB Database
+	Mostly known as “the SQL Server Agent database” because it stores information of all 
+		○ SQL Agent jobs & its configuration 
+		○ Job execution history.
+		○ Backups 
+		○ Restores
+		○ Service Broker 
+		○ Database Mail 
+	
+	MSDB has pre-defined database roles 
+		○ Database mail
+			▪ DatabaseMailUserRole
+		○ Integration Services Roles
+			▪ db_ssisadmin
+			▪ db_ssisltduser
+			▪ db_ssisoperator
+		○ Data collector roles
+			▪ dc_operator
+			▪ dc_admin
+			▪ dc_proxy
+		○ Policy-Based Management
+			▪ PolicyAdministratorRole
+		○ Server Group
+			▪ ServerGroupAdministratorRole
+			▪ ServerGroupReaderRole
+		○ SQL Server Agent Fixed Database Roles
+			▪ SQLAgentUserRole
+			▪ SQLAgentReaderRole
+			▪ SQLAgentOperatorRole
+		○ Multiserver Environment
+			▪ TargetServersRole
+		○ Server Utility
+			▪ UtilityCMRReader
+			▪ UtilityIMRWriter
+			▪ UtilityIMRReader
+		
+Model DB
+	The model database is used as the template for all databases created on an instance of SQL Server. Because tempdb is created every time SQL Server is started, the model database must always exist on a SQL Server system. 
+	Certain properties can be changed in MSDB to reflect in newly created databases.
+		○ Auto_shrink
+		○ Recovery model
+		○ Auto_update_statistics
+		○ Encrytpion (on / off)
+		○ Page_verify
+		
+TempDB
+		○ Used to store temporary objects and data like tables, views table variables, tables returned in functions, temporary objects and indexes. 
+		○ The temdb can also be used for internal operations like rebuilding indexes (when the SORT_IN_TEMPDB is ON), queries using UNION, DBCC checks, GROUP BY, ORDER BY. Hash join and Hash aggregate operations.
+		
+Resource DB
+https://www.vembu.com/blog/resource-database-sql-server/
+
+		○ Resource db maintains sys objects of SQL server. Here sys objects maintain the metadata and the data of tables, views, stored procedures of system tables and DMV.
+		○ Objects in resource DB is available through logical links in sys schema of all databases.
+		○ Any hidden objects in system objects can be viewed with sa rights.
+		○ The location of resource database is as shown below. Should not be changed as it leads to inconsistency.
+		
+			C:\Program Files\Microsoft SQLServer\Instance_Name\MSSQL\Binn\mssqlsystemresource.mdf
+			C:\Program Files\Microsoft SQL Server\Instance_Name\MSSQL\Binn\mssqlsystemresource.ldf
+		
+		○ Using DAC, the Resource DB files can be accessed.
+		○ Cannot attach the resource DB as it’s a normal binary file.
+
+	KB Article : Resource DB Files missing post install of service packs for multiple instances after reboot.
+	https://support.microsoft.com/en-us/topic/kb3074535-fix-the-resource-database-is-missing-after-you-install-updates-or-service-packs-for-instances-of-sql-server-2012-one-after-another-and-then-restart-the-server-194c1a0d-0a15-5324-1886-5fc82fe4ef6f
+
+	Find the location of the Resource Database
+		By running the below T-SQL script, you can find the location of the Resource Database of your SQL Server instance(s).
+		
+		USE master;
+		GO
+		
+		SELECT 'ResourceDB' AS DBName ,
+		       [name] AS DBFile,
+		       [filename] AS FilePath
+		FROM   sys.sysaltfiles
+		WHERE  dbid = 32767;
+		GO

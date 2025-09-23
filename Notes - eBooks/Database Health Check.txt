@@ -44,36 +44,36 @@ Check active connections:
 			○ Sp_configure : to check SQL server Max Memory, audit settings, advanced parameters etc.
 		• Blocked processes / deadlocks
 		• Locks
-			• Version Info, Core Counts: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-1/
-		• Server Properties, Configuration Values: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-2/
-		• Global Trace Flags, Process Memory: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-3/
-		• SQL Server Services Info, SQL Server Agent Jobs: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-4/
-		• SQL Server Agent Alerts, Windows Info: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-5/
-		• SQL Server NUMA Info, System Memory: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-6/
-		• SQL Server Error Log, Cluster Node Properties, AlwaysOn AG Cluster: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-7/
-		• Hardware Info, System Manufacturer, Processor Description: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-8/
-		• BPW Configuration, BPE Usage (buffer pool extension): https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-9/
-		• Memory Dump Info, Database Filenames and Paths: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-10/
-		• Volume Info, Drive-Level Latency, IO Stalls by File, IO Warnings: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-11/
-		• Database Properties, Missing Indexes All Databases, VLF Counts: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-12/
-		• CPU Usage by Database, IO Usage by Database, Total Buffer Usage by Database: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-13/
-		• Top Waits, Connection Counts by IP Address: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-14/
-	• Avg Task Counts, Detect Blocking: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-15/
-		• CPU Utilization History, Top Worker Time Queries: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-16/
-	• PLE by NUMA Node, Memory Grants Pending: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-17/
-		• Memory Clerk Usage, Ad hoc Queries Top Logical Reads Queries: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-18/
-		• File Sizes and Space, IO Stats by File: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-19/
-		• Query Execution Counts, SP Execution Counts: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-20/
-		• SP Avg Elapsed Time, SP Worker Time: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-21/
-		• SP Logical Reads, SP Physical Reads: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-22/
-		• SP Logical Writes, Top IO Statements: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-23/
-		• Bad NC Indexes, Missing Indexes, Missing Index Warnings: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-24/
-		• Buffer Usage, Table Sizes: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-25/
-		• Table Properties, Statistics Update: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-26/
-		• Volatile Indexes, Index Fragmentation: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-27/
-		•  Overall Index Usage – Reads, Overall Index Usage – Writes: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-28/
-		•  XTP Index Usage, Lock Waits: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-29/
-		• UDF Statistics, QueryStore Options: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-30/
-		• High Aggregate Duration Queries, Recent Full Backups: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-31/
+			• Version Info, Core Counts													: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-1/
+		• Server Properties, Configuration Values										: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-2/
+		• Global Trace Flags, Process Memory											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-3/
+		• SQL Server Services Info, SQL Server Agent Jobs								: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-4/
+		• SQL Server Agent Alerts, Windows Info											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-5/
+		• SQL Server NUMA Info, System Memory											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-6/
+		• SQL Server Error Log, Cluster Node Properties, AlwaysOn AG Cluster			: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-7/
+		• Hardware Info, System Manufacturer, Processor Description						: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-8/
+		• BPW Configuration, BPE Usage (buffer pool extension)							: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-9/
+		• Memory Dump Info, Database Filenames and Paths								: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-10/
+		• Volume Info, Drive-Level Latency, IO Stalls by File, IO Warnings				: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-11/
+		• Database Properties, Missing Indexes All Databases, VLF Counts				: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-12/
+		• CPU Usage by Database, IO Usage by Database, Total Buffer Usage by Database	: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-13/
+		• Top Waits, Connection Counts by IP Address									: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-14/
+	• Avg Task Counts, Detect Blocking													: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-15/
+		• CPU Utilization History, Top Worker Time Queries								: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-16/
+	• PLE by NUMA Node, Memory Grants Pending											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-17/
+		• Memory Clerk Usage, Ad hoc Queries Top Logical Reads Queries					: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-18/
+		• File Sizes and Space, IO Stats by File										: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-19/
+		• Query Execution Counts, SP Execution Counts									: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-20/
+		• SP Avg Elapsed Time, SP Worker Time 											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-21/
+		• SP Logical Reads, SP Physical Reads											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-22/
+		• SP Logical Writes, Top IO Statements											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-23/
+		• Bad NC Indexes, Missing Indexes, Missing Index Warnings						: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-24/
+		• Buffer Usage, Table Sizes														: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-25/
+		• Table Properties, Statistics Update											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-26/
+		• Volatile Indexes, Index Fragmentation											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-27/
+		•  Overall Index Usage – Reads, Overall Index Usage – Writes					: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-28/
+		•  XTP Index Usage, Lock Waits													: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-29/
+		• UDF Statistics, QueryStore Options											: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-30/
+		• High Aggregate Duration Queries, Recent Full Backups							: https://www.sqlskills.com/blogs/glenn/sql-server-diagnostic-information-queries-detailed-day-31/
 		
 

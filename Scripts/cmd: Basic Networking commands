@@ -1,0 +1,35 @@
+<#
+
+cmd: Basic Networking commands
+----------------------------
+
+    1. Ping         : Tests network connectivity between the device and a target host by sending ICMP Echo Request packets and receiving Echo Reply responses.
+    
+    2. Netstat      : Identify and display the connections and ports connected to our computer 
+    
+    3. NLookup      : Displays IP addresses for any server.
+    
+    4. Tracert      : allows you to connect to another computer over a network.
+
+    5. IPConfig     : Provides details of IP configuration. i.e. details like IPv4 address ,Subnet Mask or Default Gateway. 
+
+    6. IPconfig/All : 
+                    - updated version of the ipconfig command. This command tells us the physical address of our device. 
+                    - It tells us various details of our computer  such as IPv4,IPv6 default Gateway ,subnet mask ,
+                    - also it tells to which devices our device is connected ,configuration details of the devices to which are devices are connected.
+
+    7. Hotsname    : Displays hostname
+
+    8. Telnet      : Allows a user to log into another server within the same network through a TCP/IP connection.
+
+    9. Getmac      : Determine the MAC address of their various network devices. 
+
+
+Telnet
+-----------
+syntax: telnet <server_address> <port>
+example: Telnet <IP Address 123> <80>
+
+
+
+#>

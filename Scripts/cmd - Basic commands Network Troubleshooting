@@ -25,11 +25,16 @@ cmd: Basic Networking commands
     9. Getmac      : Determine the MAC address of their various network devices. 
 
 
+#>
+
 Telnet
 -----------
-syntax: telnet <server_address> <port>
-example: Telnet <IP Address 123> <80>
+syntax: telnet <IP Address> <port>
+example: 
+    - Telnet <IP Address 123> <80>
+    - telnet example.com 80
+    
 
 
 
-#>
+

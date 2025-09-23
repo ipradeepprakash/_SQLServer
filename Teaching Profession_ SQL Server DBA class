@@ -1,0 +1,14 @@
+-- Teaching Profession: SQL Server DBA class
+/*
+
+Improvements:
+1. For every topic covered, ensure students are aware of DMV that comes handy to check the status.
+for ex: Backup , 
+	- MSDB.DBO.backuphistory
+	- MSDB.DBO.backupmedia
+
+
+
+
+*/
+

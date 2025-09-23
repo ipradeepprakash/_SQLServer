@@ -1,0 +1,75 @@
+# Manual Failover steps: DAG (Distributed Availability Group)
+-------------------------------------------------------------------
+https://www.mssqltips.com/sqlservertip/6435/manual-failover-of-sql-server-always-on-distributed-availability-group-for-disaster-recovery-testing/
+
+
+
+
+-- step1:  Modify availability mode of the Distributed Availability Group [Distributeddag] in the primary Availability Group (AGONPREM)
+-- Modify availability mode of the primary and secondary AGs in a Distributed Availability Group
+-- Run this on the primary replica of the primary AG – TDPRD071
+
+		 ALTER AVAILABILITY GROUP [Distributeddag]     
+		 MODIFY 
+		 AVAILABILITY GROUP ON
+
+		'AGONPREM' WITH 
+		( 
+				AVAILABILITY_MODE = SYNCHRONOUS_COMMIT 
+		), 
+		'AGAZURE' WITH     
+		( 
+				AVAILABILITY_MODE = SYNCHRONOUS_COMMIT 
+		);
+
+-- Step #2: Modify availability mode of the Distributed Availability Group [Distributeddag] in the secondary Availability Group (AGAZURE)
+
+		
+		 ALTER AVAILABILITY GROUP [Distributeddag]     
+		 MODIFY 
+		 AVAILABILITY GROUP ON
+
+		'AGONPREM' WITH 
+		( 
+				AVAILABILITY_MODE = SYNCHRONOUS_COMMIT 
+		), 
+		'AGAZURE' WITH     
+		( 
+				AVAILABILITY_MODE = SYNCHRONOUS_COMMIT 
+		);
+
+
+-- Step #3: execute ONLY on PRIMARY to make it as secondary
+		ALTER AVAILABILITY GROUP [Distributeddag] SET (ROLE = SECONDARY);
+
+
+-- Step #4: execute on SECONDARY to FAILOVER with force parameter.
+		ALTER AVAILABILITY GROUP [Distributeddag] FORCE_FAILOVER_ALLOW_DATA_LOSS;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

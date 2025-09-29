@@ -33,7 +33,44 @@ Answer: General purpose (due to below requirement)
         - One of the DB will have an In-Memory table.
 
 
+4. User has fact table that has 500 Million rows and clustered index. Most of the time users select queries related to current week and rarely select data older than 1 month.
+	Now, queries run very slow, DBA need to recommend a solution.
+	
+	Answer: Table partitioning
 
+5. User is planning 40 TB OLTP database to Azure SQL Database. Which service tier should DBA recommend?
+
+Answer: Hyperscale vCore
+	- Hyperscale vCore
+	- Business Core
+	- General Purpose
+	- DTU premium
+	
+
+6. You have a resource group named RG1 that contains a General purpose service tier Azure SQL managed instance named MI1.
+You need to change the service tier of MI1 to the Business Critical.
+
+	Which command should you run?
+
+	- Set-AzSqlInstance -Name MI1 -ResourceGroupName RG1 -Edition BusinessCritical
+	- Set-AzSqlElasticPool -Edition BusinessCritical -Name mydb -ServerName MI1 -ResourceGroupName RG1
+	- Set-AzSqlInstance -Name MI1 -ResourceGroupName RG1 -Edition GeneralPurpose
+	- Set-AzSqlDatabase -ResourceGroupName RG1 -Name mydb -ServerName MI1 -Edition BusinessCritical
+
+Answer: - Set-AzSqlInstance -Name MI1 -ResourceGroupName RG1 -Edition BusinessCritical
+		(because since its MI instance, change should happen at instance level.)
+
+
+7) You have an on-premises Microsoft SQL Server named Server1 that contains a database named db1. You plan to perform an online migration to an Azure SQL managed instance named 
+	AM1. You need to add the login used to connect Server1 and AM1 to the appropriate server role on each server. The solution must follow the principle of least privilege.
+
+To which server role should you add the login?
+Answer: sysadmin ()
+
+		- sysadmin ()
+		- serveradmin (to run any DMV queries)
+		- setupadmin (meant for backup devices handling linked servers)
+		- processadmin (to see no of processes)
 
 
 

@@ -4,13 +4,33 @@ DP 300 - Sample Questions
 —------------------------------
 
 1) You have 20 On-Prem SQL servers with Audit Templates & need to migrate to Azure. What 2 services are required the same Audit Templates on Azure SQL instances
-SQL server on Azure VM
-Azure SQL - Managed Instances
 
-Hint: Audit template is an Instance level feature, so anything with *Azure SQL Database 
-* is Database as service, the audit templates are not available.
+Answer:
+  a. SQL server on Azure VM
+  b. Azure SQL - Managed Instances
+
+Hint: Audit template is an Instance level feature, so anything with *Azure SQL Database* is Database as service, the audit templates are not available.
 
 
+2) User plans to deploy Azure SQL database with table1 with several columns. You need to recommend method partitioning on table and it should include below requirements
+  - Data must be retained for 2 years
+  - Any data older than 2 years must be removed once a month.
+
+Answer: 
+	  Since the requirement is for years, ignore all related to months. Also Azure SQL supports partitioning but not user defined file groups.
+    
+    So, 
+    create a partition function for year
+    Create a partition group for PRIMARY group.
+    Create table by using partition schema on column that has datetime datatype- (Since the partition is happening, it will be of datatime column data type)
+    
+3) User is deploying SQL serve on Azure VM that will be used as Dev server with 2 small databases, one of the db will have many in-memory tables.
+Which type of VM type should user choose?
+
+Answer: General purpose (due to below requirement)
+        - Analyse the Requirements below
+        - Server will be used as DEV Server
+        - One of the DB will have an In-Memory table.
 
 
 

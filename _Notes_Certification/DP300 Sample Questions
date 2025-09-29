@@ -1,0 +1,25 @@
+-- DBA Trainer: Vamsy class
+
+DP 300 - Sample Questions
+—------------------------------
+
+1) You have 20 On-Prem SQL servers with Audit Templates & need to migrate to Azure. What 2 services are required the same Audit Templates on Azure SQL instances
+SQL server on Azure VM
+Azure SQL - Managed Instances
+
+Hint: Audit template is an Instance level feature, so anything with *Azure SQL Database 
+* is Database as service, the audit templates are not available.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

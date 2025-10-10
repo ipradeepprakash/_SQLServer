@@ -17,7 +17,8 @@ Master:
 		○ Linked server, 
 		○ Instance level Configuration.
 		
-MSDB Database
+MSDB
+---------------
 	Mostly known as “the SQL Server Agent database” because it stores information of all 
 		○ SQL Agent jobs & its configuration 
 		○ Job execution history.
@@ -54,6 +55,7 @@ MSDB Database
 			▪ UtilityIMRReader
 		
 Model DB
+---------------
 	The model database is used as the template for all databases created on an instance of SQL Server. Because tempdb is created every time SQL Server is started, the model database must always exist on a SQL Server system. 
 	Certain properties can be changed in MSDB to reflect in newly created databases.
 		○ Auto_shrink
@@ -63,10 +65,12 @@ Model DB
 		○ Page_verify
 		
 TempDB
+---------------
 		○ Used to store temporary objects and data like tables, views table variables, tables returned in functions, temporary objects and indexes. 
 		○ The temdb can also be used for internal operations like rebuilding indexes (when the SORT_IN_TEMPDB is ON), queries using UNION, DBCC checks, GROUP BY, ORDER BY. Hash join and Hash aggregate operations.
 		
 Resource DB
+---------------
 https://www.vembu.com/blog/resource-database-sql-server/
 
 		○ Resource db maintains sys objects of SQL server. Here sys objects maintain the metadata and the data of tables, views, stored procedures of system tables and DMV.
@@ -84,6 +88,7 @@ https://www.vembu.com/blog/resource-database-sql-server/
 	https://support.microsoft.com/en-us/topic/kb3074535-fix-the-resource-database-is-missing-after-you-install-updates-or-service-packs-for-instances-of-sql-server-2012-one-after-another-and-then-restart-the-server-194c1a0d-0a15-5324-1886-5fc82fe4ef6f
 
 	Find the location of the Resource Database
+--------------------------------------------------------
 		By running the below T-SQL script, you can find the location of the Resource Database of your SQL Server instance(s).
 		
 		USE master;

@@ -8,3 +8,18 @@ Answer : 1222, 1204
 3) what is the use of trace flag 1117? 
 Answer: Forces all db files on each db to grow uniformly.
 
+4) Min permission to execute - exec plan for SQL server query: SHOWPLAN
+Answer: To Run sql profiler: ALTER TRACE
+
+
+
+
+
+
+
+
+
+
+
+
+

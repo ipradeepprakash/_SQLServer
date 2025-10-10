@@ -1,1 +1,64 @@
 
+
+Date: 12 Jan 2022
+
+Interview panel: 
+	Kiran Kumar Yasa: yasakiran.kumar@hcl.com
+	Abirami: abirami.a@hcl.com
+Microsoft Teams meeting
+Join on your computer or mobile app
+Click here to join the meeting 
+Questions:
+************
+	Ø SQL Server Architecture
+	Ø Backup types: what is difference b/w Copy backup & full backup
+	Ø How do you monitor the performance of Databases?
+		○ Performance metrics (perf mons w.r.t disks, memory, network)
+	Ø Wait stats types
+	Ø Clusters
+		○ How many IP addresses needed for 2 node cluster instance?
+	
+	Ø Mirroring
+		a. If you need to add a file to database in primary database, what is the procedure?
+		○ If disk layout is same, it will automatically happen at mirror server.
+		○ If different layout, use move file option 
+
+	Ø Transactional replication, is simple recovery mode supported
+		○ Yes (replication supports all types of recovery mode)
+
+	Ø Logshipping
+	What is TIFF File?
+	
+	Ø Backup & recovery
+		Full backup : Sunday 10 PM
+		Differential backup: everyday 10 PM
+		Database issue at Friday 11:15 PM. What is recovery strategy?
+		Ans) take a tail log backup. restore full backup - Sunday 10 PM + Friday Differential 10 PM + restore at command to stop at 11:15 PM
+	
+	Ø Migration
+	How do you Scripting logins:
+		○ Through script
+		○ SSIS scripting tasks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

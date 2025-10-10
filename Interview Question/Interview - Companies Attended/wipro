@@ -1,1 +1,18 @@
+Date: 14/9/2021
+Interviewers: Komal Arora (Manager), Srikanth donagani (DBA)
+Time: 2:30 - 3 PM
+
+Questions asked:
+	- Can Zero RPO be available in Always On
+	- How to configure always on?
+	- Database Corrupted at page level, how to restore those corrupted pages back.
+	- Huge 8 TB Database  needs to be migrated from lower version to higher version in very low downtime (10 mins). What is the approach?
+	- Wait types
+	- Difference between copy-only backup & full backup.
+	- User needs to run exec plan, what permission he needs?
+	- User needs to run profiler, what permission he needs?
+	
+	
+	
+	
 

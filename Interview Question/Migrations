@@ -1,8 +1,14 @@
 Migrations Scenarios
 --------------
-		Requirement: on stand alone servers (Azure VM with SQL 2016 onwards & destinatin being Azure MI)
-		- If there is On-Prem or Azure VM that has SQL server 2016 Onwards to wanted to migrate Databases to Azure Managed Instance (MI) without using Always On Feature, the DAG method involved does the fastest migration.
 
+1) Requirement: on stand alone servers (Azure VM with SQL 2016 onwards & destinatin being Azure MI)
+		- If there is On-Prem or Azure VM that has SQL server 2016 Onwards to wanted to migrate Databases to Azure Managed Instance (MI) without using Always On Feature, the DAG method involved does the fastest migration.
+2) would it be possible to migrate Database from on-prem to azure without using Express route OR site-to-site?
+		Answer: YES, possible with Azure Database Migration services ( without connectivity, we cannot connect to Azure from On-Prem server.)	
+			Currently, Azure Database Migration Service running in hybrid mode supports SQL Server migrations to: (some steps need to be done at AD end)
+
+			· Azure SQL Managed Instance with near zero downtime (online).
+			· Azure SQL Database single database with some downtime (offline).
 		
 
 

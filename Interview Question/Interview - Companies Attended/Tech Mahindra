@@ -1,1 +1,22 @@
+Company : TECH MAHINDRA
+	Interviewer : 
+		○ Prasanna kandgal Mahadevappa ( pk00106937@techmahindra.com )
+		○ Karunya thomas (KT00557563@TechMahindra.com )
+		○ Prashant Thota ( pt00467539@techmahindra.com )
+	Date : Sat 6/5/2021
+	Time : 2:30 PM - 3:00 PM
+	
+Meeting Details:
+*****************
+	Microsoft Teams Video Conference
+
+Questions asked in interview:
+**************************
+	1) How to check DB integrity?
+	2) Scenario of cluster nodes in 2 different locations. How to implement DB HA & DR.
+	3) How you approach Store procedure optimization?
+	4) What DA have you implemented?
+	5) Mongodb? Mysql?
+	6) Have you done network configurations?? (not sure why he asked)
+	
 

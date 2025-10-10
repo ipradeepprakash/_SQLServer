@@ -1,1 +1,32 @@
 
+Interview date: 12 august 2022
+Time: 6:30 PM
+
+HR: Snehal Kulkarni
+Interview panel: Praveen Kasena
+
+
+Questions asked:
+	1. SQL architecture
+	2. Can always on be configured without cluster nodes? If so, how will application know the active node? What about the listener?
+	3. What is covering index?
+	4. What is column index?
+	5. How replication can be implemented with always ON?
+	6. HA/DR from on-premises to Azure? What is the method?
+	
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,1 +1,34 @@
+Company : NTT DATA
+	Interviewer : Aadhar Srivastava
+	Date : 25th March 2021.
+
+Meeting Details:
+*****************
+	Date: 
+	Zoom Video Conference
+	Meeting ID : 3902846107
+	passcode : 7AMHp1
+
+Questions asked in interview:
+**************************
+	1) how Patching is done on Clusters (Active & passive Nodes)
+	2) checkpoint (can we do manually)
+	3) Database Corruption ( use Emergency Mode)
+		- Put db in EMERGENCY
+		- Do dbcc checkdb
+		- Put db in single user mode
+		- Fix the corruption issue, then bring db online in multi user mode.
+
+	4) Insert Into table
+	5) Lazy write
+	6) Page Header
+	7) Dynamic Port
+		- Only named instances of SQL Server can use the dynamic port.
+		
+	8) Model DB
+	9) index scan and index seek differences
+	
+	
+	
+	
 

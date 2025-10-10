@@ -1,0 +1,6 @@
+Interview Questions: DBCC 
+-----------------------------------------------------
+1) when was the last time DBCC CHECKDB happned for specific db? 
+Answer - DBCC DBINFO (<Database_name123>) with tableresults
+
+

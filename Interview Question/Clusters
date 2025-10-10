@@ -8,12 +8,6 @@ Interview Questions: FCI (Failover Cluster Instance)
 Answer: - No
         Note that Instance Name rename is unsupported. In named instance the server name is in format of ServerName\InstanceName. So, you can change it to NewName\InstanceName but NOT to ServerName\ NewInstanceName.
 
-Interview Questions: DBCC 
------------------------------------------------------
-1) when was the last time DBCC CHECKDB happned for specific db? 
-Answer - DBCC DBINFO (<Database_name123>) with tableresults
-
-
 
 
 

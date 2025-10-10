@@ -1,0 +1,18 @@
+Interview Questions: Always On
+------------------------------------
+1. Can I create Always On between On-Premises to Azure SQL Database?  Not an Azure VM or Managed Instance. Just Azure SQL database as Secondary Replica
+Answer: No, Not possible
+
+
+
+
+
+
+
+
+
+
+
+
+
+

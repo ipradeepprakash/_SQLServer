@@ -1,8 +1,8 @@
 SQL Server 2012 (11.x): new Features 
 **************************************
 SQL Server 2012 
-Code Name: Denalli 
-Year: 2012 
+Code Name  : Denalli 
+Year       : 2012 
 
 Operating systems supports SQL Server 2012 
 - windows server2012
@@ -10,17 +10,44 @@ Operating systems supports SQL Server 2012
 - windows vista, windows 7, windows 8
 
 
-Tables now can be placed in required filegroups . 
+SQL Server 2012 : Database Engine Features and Tasks 
+********************************************* 
+https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2012/ms130214(v=sql.110) 
+
+- Columnstore Indexes 
+- FileTable support to handle system files in SQL Server.  
+- AlwaysOn: Failover Cluster Instances, AlwaysOn : Availability Groups. 
+- Contained Databases 
+- In-memory  
+- semantic search is a feature included in Full text search to search in unstructured documents. 
+- Resource Governor Enhancements (Database Engine) 
+- Online Index Create, Rebuild, and Drop 
+- SSMS includes IntelliSense features and a Database Recovery Advisor. 
 
 
 
 
 
+New Method of DB Administrations
+----------------------------------------------
 
+1. Moving and copying Databases to other instances 
+    old approach
+    ------------------
+    Sp_attach_db : will be discouraged from SQL server 2012. 
 
+    New approach - 
+    --------------------- 
+      - Create database … for attach (which now supercedes sp_attach_db) 
+      - Requires use of logical names (use sys.databases_files) 
 
-
-
+2. Relocate database files within instance 
+    Use alter database  
+    Requires use of logical file names. 
+  
+    For moving system database files 
+        Master db                 : requires setting startup options in SQL Server Configuration manager. 
+        Other system databases    : require ALTER DATABASE and restart of SQL Server Agent. 
 
 
 

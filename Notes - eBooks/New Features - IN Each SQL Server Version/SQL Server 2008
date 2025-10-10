@@ -1,0 +1,162 @@
+SQL Server 2008: New Features 
+**********************************
+Microsoft SQL Server 2008 R2 
+
+      Released : 2010-04-21 
+      Mainstream support end date : 2014-07-08 
+      Extended support end date : 2019-07-09 
+      Also called : 
+      SQL 2008 R2 
+      SQL Server 10.50  (not to be confused with SQL Server 2010.5 ← does not exist!) 
+      Codename: Kilimanjaro 
+
+Database Compatibility Level: 100 
+
+SQL Server 2008 R2 is a minor version upgrade of SQL Server 2008 
+https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/bb500459(v=sql.105) 
+https://sqlserverbuilds.blogspot.com/2008/05/sql-server-2008-r2-versions.html 
+
+- The extended support for SQL Server 2008 and 2008R2 will not be provided by Microsoft after July 09, 2019. 
+- Checksum to verify Tempdb 
+- Sub-Minute (seconds) Log Shipping in SQL Server 2008 
+
+
+Note 
+-------
+- A new sp_configure server level option was introduced in SQL Server 2008 called OPTIMIZE FOR ADHOC WORKLOADS that reduces the amount of cache used by single-use plans. 
+- Running the following statement will flush the ad hoc plans (and prepared plans unfortunately but not stored procedure plans, which are more important to keep) from the cache and will free up the memory: 
+  DBCC FREESYSTEMCACHE(‘SQL Plans’) 
+
+
+SQL Server 2008 R2 : Cumulative updates 
+
+https://sqlserverbuilds.blogspot.com/2008/05/sql-server-2008-r2-versions.html 
+
+ 
+
+SQL Server 2008 r2 : New Features 
+-----------------------------------
+- Change tracking 
+- Change data capture 
+- SQL Audit 
+- Compressed Indexes & Tables 
+- Filtered Indexes and statistics 
+- Transparent Data Encryption 
+- Connecting to the Database Engine Using Extended Protection. 
+- Master Data Services 
+- Data Tier Application 
+- PowerPivot for SharePoint 
+- PowerPivot for Excel 
+- Multi-Server Administration. 
+- centralized management and consolidation(CMS). 
+- Database mirroring enables the creation of hot standby servers that provide rapid failover support with no loss of data from committed transactions. 
+
+Filtered indexes :  
+-----------------------
+- Traditional no-clustered indexes focus all the data in the column though some values like NULL are not used often.    
+- filtered indexes are non-clustered indexes that has where clause in addition.  
+  i.e. only specific values in column will be added to indexes for faster, accurate, efficient results. 
+
+ 
+
+Filestream feature: SQL Server 2008 
+-------------------------------
+- filestream is not data type, instead it is an attribute that is assigned to VARBINARY(MAX) Column, when any column is set to VARBINARY(MAX) it becomes a part of FILESTREAM feature.  
+  when any data is stored in VARBINARY(max) column, the data is stored in NT File system. only the pointer to the file system will be stored in table. 
+  
+- Prior to SQL Server 2008, Unstructured data was supposed to store in 
+  - VARBINARY column  
+    OR  
+  - Image column 
+
+    which was bad in terms of performance. 
+    OR 
+    store unstructred data as disk files & store the location of table along the structred data. 
+    which was good in terms of [performance] only. 
+  
+- FILESTREAM feature was introduced in SQL Server 2008 & is used to store and manage the unstrucrtured files like 
+  
+  - word files 
+  - audio files 
+  - videp files 
+
+in NT file system & maintains the consistency between Sturctured & unstructured files. 
+
+Transparent Data Encryption (TDE) 
+-----------------------------------
+Applies to:  
+
+- SQL Server (all supported versions)  
+- Azure SQL Database  
+- Azure SQL Managed Instance  
+- Azure Synapse Analytics  
+- Parallel Data Warehouse 
+- TED is encryption of SQL Server data files at rest. when TDE is enabled, it SQL Server creates an encryption on data & use certificate to protect private Key that encrypts the data.  
+- without the key, database restore will not open. 
+- After enabling the TDE, immediately backup the certificate and its associated private key. 
+- TDE : uses DEK encryption. 
+- During restore of  database, correct key has to be given else restore will fail. 
+
+Master Data Service 
+---------------------
+- Master Data Services enables you to manage a master set of your organization's data. You can organize the data into models, create rules for updating the data, and control who updates the data.  
+
+Data tier applications : 
+-----------------------
+- it is a logical database Management entity that contains all SQL Server objects like Tables, views, logins etc. 
+- a package that contains all the above entities are called DACPAC. 
+- BACPAC is Data in additional to logical entities (Data + DACPAC = BACPAC) 
+
+Multi-Server Administration and Data-Tier Application 
+----------------------------------------------------
+- The SQL Server Utility forms a central repository for performance data and management policies that tailor the operation of instances of the Database Engine that have been enrolled in the utility. It also includes a Utility Explorer for centralized management, and dashboards that report the state of the managed instances. A data-tier application (DAC) forms a single unit for developing, deploying, and managing the database objects used by an application. 
+
+Connecting to the Database Engine Using Extended Protection 
+------------------------------------------------------------
+- SQL Server now supports Extended Protection, using service binding and channel binding to help prevent an authentication relay attack. Also, see Extended Protection for Authentication with Reporting Services. 
+
+
+
+*********** Installation steps: What's New in SQL Server 2008 R2 Installation ***************
+------------------------------------------------------------------------------------------------------------------------
+
+1) Imaging a stand-alone instance of SQL Server using the new SysPrep capability of SQL Server. 
+2) A stand-alone installation of SQL Server includes two steps: prepare and complete. In SQL Server 2008, these two steps ran as one integrated step during installation. 
+3) Starting with SQL Server 2008 R2, in addition to the integrated installation, the two steps are available as separate installation actions, and can be used in preparing an image of SQL Server. 
+
+ Considerations for side-by-side instances of SQL Server 2008 R2 and SQL Server 2008. 
+
+1) Considerations for side-by-side instances of SQL Server 2008 R2 and SQL Server 2008. 
+2) SQL Server 2008 R2 and SQL Server 2008 share the same major version number and therefore share some SQL Server components. 
+        
+      - A new command line parameter /ACCEPTSQLSERVERLICENSETERMS is now required for unattended installations of SQL Server. 
+      - Starting in SQL Server 2008 R2, the Reporting Services component no longer supports Itanium-based servers running Windows Server 2003 or Windows Server 2003 R2. Reporting Services continues to support other 64-bit operating systems, including Windows Server°2008 for Itanium-Based Systems and Windows Server°2008°R2 for Itanium-Based Systems.  
+      - To upgrade to SQL Server 2008 R2 from a SQL Server 2008 installation with Reporting Services on an Itanium-based system edition of Windows Server 2003 or Windows Server 2003 R2, you must first upgrade the operating system. 
+      - New role-based installation parameter for installing SQL Server in a predetermined configuration. SQL Server Express is installed using the AllFeatures_WithDefaults role that minimizes the required user input.  
+      - The AllFeatures_WithDefaults role installs all available features, adds the current user to the SQL Server sysadmin fixed server role, and uses default values for the service accounts whenever possible. The AllFeatures_WithDefaults role can be provided as a command line parameter when installing the full product. 
+      - The option to enable the feature usage reporting during SQL Server Setup is now available on the Accept License Terms page. In the previous versions of SQL Server, the feature usage reporting option was available through the Error and Usage Reporting page which now only includes the option to enable error reporting. 
+      - SQL Server 2008 R2 includes a new edition of SQL Server - SQL Server Datacenter 
+      - SQL Server Datacenter delivers a high-performing data platform that provides the highest levels of scalability for large application workload, virtualization, and consolidation. 
+      - Maximum number of CPU support for SQL Server Enterprise has changed.  SQL Server Enterprise supports a maximum of 8 CPUs. 
+      - New role-based installation parameter for installing Analysis Services in a new or existing SharePoint farm. 
+
+
+What's New in SQL Server 2008 setup architecture 
+-----------------------------------------------------
+      SQL Server 2008 has new Setup architecture for the following scenarios:  
+      
+      a) installation,  
+      b) upgrade,  
+      c) maintenance,  
+      d) failover clustering, and  
+      e) command prompt installation. 
+      
+      Slipstream:  
+      --------------
+      - Slipstream is the integration of the original installation media files with a SQL Server 2008 update, so that they can be installed as a single step. 
+      - You can uninstall cumulative updates and the service pack from the Program and Features application in Control Panel.  
+      
+
+
+
+

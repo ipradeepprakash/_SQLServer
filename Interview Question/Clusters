@@ -1,0 +1,40 @@
+Interview Questions: FCI (Failover Cluster Instance)
+---------------------------------------------------------
+1. what is
+  - is alive,
+  - like alive
+
+2. 1) Can we rename named instance name in SQL server? 
+Answer: - No
+        Note that Instance Name rename is unsupported. In named instance the server name is in format of ServerName\InstanceName. So, you can change it to NewName\InstanceName but NOT to ServerName\ NewInstanceName.
+
+Interview Questions: DBCC 
+-----------------------------------------------------
+1) when was the last time DBCC CHECKDB happned for specific db? 
+Answer - DBCC DBINFO (<Database_name123>) with tableresults
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

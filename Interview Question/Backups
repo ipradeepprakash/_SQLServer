@@ -1,0 +1,11 @@
+Interview Questions: Backup / Restores
+-------------------------------------------
+
+		1) can we restore Databases from Azure Managed instance (MI) to On-Prem?
+		Answer: Yes, from Azure Managed instance (MI) to only SQL server 2022 - it is possible.
+
+		Note: 
+		- SSMS 17 version does NOT show DAG Feature "Azure SQL Managed instance link ", only SSMS 18 version shows.
+		- 
+
+

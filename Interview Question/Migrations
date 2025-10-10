@@ -1,0 +1,24 @@
+Migrations Scenarios
+--------------
+		Requirement: on stand alone servers (Azure VM with SQL 2016 onwards & destinatin being Azure MI)
+		- If there is On-Prem or Azure VM that has SQL server 2016 Onwards to wanted to migrate Databases to Azure Managed Instance (MI) without using Always On Feature, the DAG method involved does the fastest migration.
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

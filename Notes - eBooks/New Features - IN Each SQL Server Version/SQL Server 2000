@@ -1,1 +1,14 @@
 
+SQL Server 2000: New Features 
+-----------------------------
+ 
+
+Features: 
+---------------
+
+1) Tempdb : Trace Flag 1118 
+- This trace flag was introduced in SQL Server 2000 to help alleviate contention on the SGAM page (2:1:3) by disabling nearly all mixed extent allocations in tempdb. 
+
+2) SQL Server 7.0 :  
+    - Torn Page Detection. 
+

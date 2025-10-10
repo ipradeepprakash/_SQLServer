@@ -1,0 +1,29 @@
+SQL Server 2017 (14.x): New Features 
+******************************************
+Features:
+-------------
+- Linux Support
+ 
+
+Change in Servicing Model : 
+--------------------------------
+- Starting from SQL Server 2017, Microsoft changes its servicing model. It no longer provides the service packs. Instead, it releases the Cumulative Packs in every 2 months. Every CU contains the previous cumulative pack as well.  
+        For example, 
+        >> in SQL Server 2019, Microsoft released the latest CU7 on 2nd September 2020. Therefore, if you are on the RTM version, you can directly apply the CU7 to be on the latest build version [15.0.4063.15]. 
+ 
+In SQL Server 2017 we can configure cluster less Availability Group in SQL Server without failover cluster configuration on participating replicas. It can be done on both Windows as well as Linux based SQL Servers. 
+
+New execution plan feature: 
+        > During an interleaved execution, the optimizer generates a plan for the query, in the usual fashion, then the optimization phase pauses, the pertinent subtree of a given plan is executed to get the actual row counts, and the optimizer then uses the actual row counts to optimize the remainder of the query. 
+        > Adaptive Join – Introduced in SQL Server 2017, this operator implements both the Nested Loops and the Hash Match algorithms, and chooses the option with the lowest cost at runtime, when the actual number of rows in the top input is known. 
+
+
+
+
+
+
+
+
+
+
+

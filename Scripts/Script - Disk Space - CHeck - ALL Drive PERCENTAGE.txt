@@ -1,0 +1,103 @@
+-- Script - Disk Space - CHeck - ALL Drive PERCENTAGE
+select @@servername as Servername
+go
+
+/*
+SELECT Drive
+    ,   TotalSpaceGB
+    ,   FreeSpaceGB
+    ,   PctFree
+    ,   PctFreeExact
+    FROM
+    (SELECT DISTINCT
+        SUBSTRING(dovs.volume_mount_point, 1, 10) AS Drive
+    ,   CONVERT(INT, dovs.total_bytes / 1024.0 / 1024.0 / 1024.0) AS TotalSpaceGB
+    ,   CONVERT(INT, dovs.available_bytes / 1048576.0) / 1024 AS FreeSpaceGB
+    ,   CAST(ROUND(( CONVERT(FLOAT, dovs.available_bytes / 1048576.0) / CONVERT(FLOAT, dovs.total_bytes / 1024.0 /
+                         1024.0) * 100 ), 2) AS NVARCHAR(50)) + '%' AS PctFree
+    ,   CONVERT(FLOAT, dovs.available_bytes / 1048576.0) / CONVERT(FLOAT, dovs.total_bytes / 1024.0 / 1024.0) * 100 AS PctFreeExact                
+    FROM    sys.master_files AS mf
+    CROSS APPLY sys.dm_os_volume_stats(mf.database_id, mf.file_id) AS dovs) AS DE
+
+	*/
+
+
+	DROP TABLE IF EXISTS #driveinfo;
+DROP TABLE IF EXISTS #drives;
+GO
+DECLARE @drive varchar(100);
+CREATE TABLE #driveinfo
+(
+    rn          int IDENTITY(1,1) 
+                PRIMARY KEY 
+                CLUSTERED
+    , drive     varchar(100) NULL
+    , txt       varchar(1000) NULL
+    , item      varchar(100) NULL
+    , quantity  bigint NULL
+);
+ 
+CREATE TABLE #drives
+(
+    drive       varchar(100) NOT NULL
+    , [MB free] bigint NOT NULL
+);
+INSERT INTO #drives (drive, [MB free])
+EXEC sys.xp_fixeddrives;
+ 
+DECLARE cur CURSOR LOCAL FORWARD_ONLY STATIC READ_ONLY
+FOR
+SELECT d.drive
+FROM #drives d
+ORDER BY d.drive;
+OPEN cur;
+FETCH NEXT FROM cur INTO @drive;
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    DECLARE @cmd varchar(1000);
+    SET @cmd = 'fsutil volume diskfree ' + @drive + ':';
+    INSERT INTO #driveinfo (txt)
+    EXEC sys.xp_cmdshell @cmd;
+    UPDATE #driveinfo 
+    SET drive = @drive + ':'
+    WHERE drive IS NULL;
+    FETCH NEXT FROM cur INTO @drive;
+END
+CLOSE cur;
+DEALLOCATE cur;
+ 
+DELETE di
+FROM #driveinfo di 
+WHERE di.txt IS NULL;
+ 
+UPDATE di
+SET di.item = LEFT(di.txt, CHARINDEX(':', di.txt) - 1)
+    , di.quantity = RIGHT(di.txt, CHARINDEX(':', REVERSE(di.txt)) - 1)
+FROM #driveinfo di
+ 
+ALTER TABLE #driveinfo DROP COLUMN txt;
+ 
+;WITH src AS 
+(
+    SELECT pvt.drive
+        , pvt.[Total # of bytes             ]
+        , pvt.[Total # of free bytes        ]
+        , pvt.[Total # of avail free bytes  ]
+    FROM #driveinfo
+    PIVOT (
+        SUM(quantity)
+        FOR item IN (
+              [Total # of free bytes        ]
+            , [Total # of bytes             ]
+            , [Total # of avail free bytes  ]
+            )
+    ) pvt
+)
+SELECT src.drive
+    , [Total MB]            = FORMAT(SUM(src.[Total # of bytes             ] / 1048576), '#,###')
+    , [Total Free MB]       = FORMAT(SUM(src.[Total # of free bytes        ] / 1048576), '#,###')
+    , [Total Available MB]  = FORMAT(SUM(src.[Total # of avail free bytes  ] / 1048576), '#,###')
+    , [Percent Free]        = FORMAT(CONVERT(decimal(38,0), SUM(src.[Total # of free bytes        ])) 
+                            / CONVERT(decimal(38, 0), SUM(src.[Total # of bytes             ])), '0.00%')
+FROM src
+GROUP BY src.drive

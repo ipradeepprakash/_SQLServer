@@ -1,0 +1,18 @@
+-- Scripts - Disk Capacity on windows level
+SELECT
+    @@SERVERNAME Server,
+    Volume,
+    CAST(SizeGB as DECIMAL(10,2)) CapacityGB,
+    CAST((SizeGB - FreeGB) as DECIMAL(10,2)) UsedGB,
+    CAST(FreeGB as DECIMAL(10,2)) FreeGB,
+    CAST([%Free] as DECIMAL(10,2))[%Free]
+    FROM(
+        SELECT distinct(volume_mount_point) Volume, 
+          (total_bytes/1048576)/1024.00 as SizeGB, 
+          (available_bytes/1048576)/1024.00 as FreeGB,
+          (select ((available_bytes/1048576* 1.0)/(total_bytes/1048576* 1.0) *100)) as '%Free'
+        FROM sys.master_files AS f CROSS APPLY 
+          sys.dm_os_volume_stats(f.database_id, f.file_id)
+        group by volume_mount_point, total_bytes/1048576, 
+          available_bytes/1048576  )T
+

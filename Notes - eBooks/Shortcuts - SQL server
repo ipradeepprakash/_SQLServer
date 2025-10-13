@@ -1,0 +1,18 @@
+SQL Server Version	Location
+----------------------------
+Ref: https://www.conradakunga.com/blog/accessing-sql-server-configuration-manager/
+
+enter Windows + R : Type : sqlservermanager16--> To opne SQL Server Manager of SQL server 2022 Version
+                           sqlservermanager15--> To opne SQL Server Manager of SQL server 2019 Version
+                           sqlservermanager14--> To opne SQL Server Manager of SQL server 2017 Version
+                           sqlservermanager13--> To opne SQL Server Manager of SQL server 2016 Version
+
+
+Depending on your version of SQL Server, paste the location below into the dialog
+------------------------------------------------------------------------------------
+  SQL Server 2022	C:\Windows\SysWOW64\SQLServerManager16.msc
+  SQL Server 2019	C:\Windows\SysWOW64\SQLServerManager15.msc
+  SQL Server 2017	C:\Windows\SysWOW64\SQLServerManager14.msc
+  SQL Server 2016	C:\Windows\SysWOW64\SQLServerManager13.msc
+  SQL Server 2014 (12.x)	C:\Windows\SysWOW64\SQLServerManager12.msc
+  SQL Server 2012 (11.x)	C:\Windows\SysWOW64\SQLServerManager11.msc

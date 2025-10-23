@@ -1,4 +1,7 @@
-
+Book: SQL Server AlwaysOn Revealed-Peter A Carter
+********************************************************
+Chapters
+-----------
 CHAPTER 1: High Availability and Disaster Recovery Concepts
 Chapter 2: Understanding High Availability and Disaster Recovery Technologies
 Chapter 3: Implementing a Cluster
@@ -7,6 +10,20 @@ Chapter 5: Implementing AlwaysOn Availability Groups
 Chapter 6: Administering AlwaysOn
 
 
+CHAPTER 1: High Availability and Disaster Recovery Concepts
+-------------------------------------------------------
+
+Concept of HA (High Availability)
+.....................................
+In today’s 24×7 environments that are running mission critical applications, businesses rely heavily on the availability of their data. Although servers and their software are generally reliable, there is always the risk of a hardware failure or a software bug, each of which could bring a server down. 
+To mitigate these risks, business-critical applications often rely on redundant hardware to provide fault tolerance. If the primary system fails, then the application can automatically fail over to the redundant system. This is the underlying principle of high availability (HA).
+P.S: Failover to Secondary server in case of Primary server issues is HA (High availability)
+
+
+Concept of DR (Disaster Recovery)
+..................................
+Even in case of issue in primary server, Critical applications may require a redundant server to hold a synchronized copy of the data in a secondary location. This is the underpinning concept of disaster recovery (DR).
+P.S: Relying on synchronized data on secondary server is Disaster Recovery (DR)
 
 
 

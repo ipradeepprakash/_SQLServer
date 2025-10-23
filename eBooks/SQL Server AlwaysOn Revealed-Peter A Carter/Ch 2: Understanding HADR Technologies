@@ -1,2 +1,35 @@
 Ch 2: Understanding High Availability and Disaster Recovery Technologies
 ***************************************************************************
+
+SQL Server provides a full suite of technologies for implementing high availability and disaster recovery. 
+
+AlwaysOn Failover Clustering
+------------------------------
+
+Active-Passive Configuration
+...............................
+Two-Node Cluster (Active/Passive Configuration) : https://drive.google.com/file/d/1IDgXcutPmkLe_wVvHZxI-1lGIWFmYKaP/view?usp=drive_link
+
+- A Windows cluster is a high availability Technology in which a group of up to 64 servers works together to provide redundancy.
+- An AlwaysOn Failover Clustered Instance (FCI) is an instance of SQL Server that spans the servers within this group. If one of the servers within this group fails, another server takes ownership of the instance.
+- Each server within a cluster is called a node.
+- Each node within the cluster also shares the same storage for the SQL Server data and log files. (The storage, however, is only attached to the active node.)
+- Each node has SQL server binaries installed seperately.
+- If the active node fails, then the SQL Server service is stopped and the storage is detached. The storage is then reattached to one of the other nodes in the cluster, and the SQL Server service is started on this node, which is now the active node.
+
+
+Active-Active Configuration (Load-Balancing)
+.................................................
+Two-Node Cluster (Active/Active Configuration)  : https://drive.google.com/file/d/1cgRCL7EkOZ-H_Mj0hfQeiyzdio_AqsTr/view?usp=drive_link
+
+- it is possible to install multiple instances on a cluster, and a different node may own each instance.
+- Therefore in the above picture , in an active/active configuration, during normal operations, Node1 may host Instance1 and Node2 may host Instance2. If Node1 fails, both instances are then hosted by Node2, and vice-versa. 
+- Caution  
+>>>>>>>>>
+In an active/active cluster, it is important to consider resources in the event of failover. 
+For example, if each node in a cluster group has 128GB of RAM and the instance hosted on each node is configured to use 96GB of RAM and locking pages in memory, then when one node fails over to the other node, this node fails as well, because it does not have enough memory to allocate to both instances. Make sure you plan both memory and processor requirements as if the two nodes are a single server. For this reason, active/active clusters are not generally recommended for SQL Server.
+
+
+
+
+

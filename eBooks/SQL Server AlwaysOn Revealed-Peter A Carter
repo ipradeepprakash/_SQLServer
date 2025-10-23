@@ -39,12 +39,12 @@ details the amount of acceptable downtime per week, per month, and per year for 
 
 Table 1-1. Levels of Availability
 
-Level of Availability		Downtime Per Week					Downtime Per Month					    Downtime Per Year
-----------------------------------------------------------------------------------------------------------------------
-99%							1 hour, 40 minutes,48 seconds		7 hours, 18 minutes,17 seconds		3 days, 15 hours,39 minutes, 28 seconds
-99.9%						10 minutes, 4 seconds				    43 minutes, 49 seconds				    8 hours, 45 minutes,56 seconds
-99.99%						1 minute							        4 minutes, 23 seconds				      52 minutes, 35 seconds
-99.999%						6 seconds							        26 seconds							          5 minutes, 15 seconds
+Level of Availability		Downtime Per Week			Downtime Per Month			Downtime Per Year
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+99%				1 hour, 40 minutes,48 seconds		7 hours, 18 minutes,17 seconds		3 days, 15 hours,39 minutes, 28 seconds
+99.9%				10 minutes, 4 seconds			43 minutes, 49 seconds			8 hours, 45 minutes,56 seconds
+99.99%				1 minute				4 minutes, 23 seconds			52 minutes, 35 seconds
+99.999%				6 seconds				26 seconds				5 minutes, 15 seconds
 
 
 

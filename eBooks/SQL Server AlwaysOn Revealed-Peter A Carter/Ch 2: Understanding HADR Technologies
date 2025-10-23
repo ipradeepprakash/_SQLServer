@@ -5,8 +5,9 @@ SQL Server provides a full suite of technologies for implementing high availabil
 
 AlwaysOn Failover Clustering
 ------------------------------
-
+---------------------------------------------------------------------------------------------------------
 --------------------------------- 2 Node cluster configurations ---------------------------------------
+---------------------------------------------------------------------------------------------------------
 
 Active-Passive Configuration (2 Node cluster)
 ...............................
@@ -31,10 +32,9 @@ Two-Node Cluster (Active/Active Configuration)  : https://drive.google.com/file/
 In an active/active cluster, it is important to consider resources in the event of failover. 
 For example, if each node in a cluster group has 128GB of RAM and the instance hosted on each node is configured to use 96GB of RAM and locking pages in memory, then when one node fails over to the other node, this node fails as well, because it does not have enough memory to allocate to both instances. Make sure you plan both memory and processor requirements as if the two nodes are a single server. For this reason, active/active clusters are not generally recommended for SQL Server.
 
-
-
-
+---------------------------------------------------------------------------------------------------------
 ----------------------------- 3-Plus Node Configurations -----------------------------------
+---------------------------------------------------------------------------------------------------------
 
 When you have 3 or more nodes, it is unlikely that you will want to have a single active node and two redundant nodes, due to the associated costs. Instead, you can choose to implement an N+1 or N+M configuration.
 In an N+1 configuration, you have multiple active nodes and a single passive node. If a failure occurs on any of the active nodes, they fail over to the passive node.
@@ -48,7 +48,41 @@ https://drive.google.com/file/d/152zq4TVMvyRkjamC_42jdyyvMiNp-fmo/view?usp=shari
 
 Quorum
 ---------
+- The definition of a quorum is “The minimum number of members required in order for business to be carried out.” 
+- In terms of high availability, this means that each node within a cluster, and optionally a witness device (which may be a cluster disk or a file share that is external to the cluster), receives a vote.
+    -- Split-brain scenario:
+       --------------------
+       imagine that you have 
+        > 3 nodes in Data Center 1 and 
+        > 3 nodes in Data Center 2
+       Imagine that you lose network connectivity between the two data centers, yet all six nodes remain online.
+       Now, The 3 nodes in Data Center 1 believe that all of the nodes in Data Center 2 are unavailable. Conversely, the 3 nodes in Data Center 2 believe that the nodes in Data Center 1 are unavailable.
+       This leaves both sides (known as partitions) of the cluster thinking that they should take control. 
+       This can have unpredictable and undesirable consequences for any application that successfully connects to one or the other partition.
+       The Quorum = (Voting Members / 2) + 1 formula protects against this scenario.
+Note/Tip: 
+---------
+- Tip : If your cluster loses quorum, then you can force one partition online, by starting the cluster service using the /fq switch. 
+- If you are using Windows Server 2012 R2 or higher, then the partition that you force online is considered the authoritative partition. This means that other partitions can automatically re-join the cluster when connectivity is re-established.
 
+- Quorum Models
+================
+there are many Quorum Models (that suits as per requirement)
+
+Quorum Model                                   Appropriate Usage
+---------------------------------------------------------------------------------------------------------
+Node Majority                                          When you have an odd number of nodes in the cluster
+Node + Disk Witness Majority                           When you have an even number of nodes in the cluster
+Node + File Share Witness Majority                     When you have nodes split across multiple sites or when you have an even number of nodes and are required to avoid shared disks*
+
+Note: 
+-------
+- Windows Server 2012 R2 also introduces the concepts of Dynamic Quorum and Tie Breaker for 50% Node Split.
+- When Dynamic Quorum is enabled, the cluster service automatically decides whether or not to give the quorum witness a vote, depending on the number of nodes in the cluster.
+- If you have an even number of nodes, only then it is assigned a vote. 
+- For Tie Breaker for 50% Node Split,  If you have an even number of nodes and a witness and the witness fails, then the cluster service automatically removes a vote from one random node within the cluster. This   
+  maintains an odd number of votes in the quorum and reduces the risk of a cluster going offline, due to a witness failure.
+- 
 
 
 

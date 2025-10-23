@@ -105,7 +105,13 @@ Database Mirroring
 Tip  Database mirroring is not supported on databases that use In-Memory OLTP. You will be unable to configure database mirroring, if your database contains a memory-optimized filegroup.
 
 
-
+AlwaysOn Availability Groups
+*********************************
+- AlwaysOn Availability Groups (AOAG) replaces database mirroring and is essentially a merger of database mirroring and clustering technologies. 
+- 
+- 
+- 
+- 
 
 
 

@@ -4,7 +4,8 @@ Ch 2: Understanding High Availability and Disaster Recovery Technologies
 SQL Server provides a full suite of technologies for implementing high availability and disaster recovery. 
 
 AlwaysOn Failover Clustering
-------------------------------
+================================
+
 ---------------------------------------------------------------------------------------------------------
 --------------------------------- 2 Node cluster configurations ---------------------------------------
 ---------------------------------------------------------------------------------------------------------
@@ -82,7 +83,25 @@ Note:
 - If you have an even number of nodes, only then it is assigned a vote. 
 - For Tie Breaker for 50% Node Split,  If you have an even number of nodes and a witness and the witness fails, then the cluster service automatically removes a vote from one random node within the cluster. This   
   maintains an odd number of votes in the quorum and reduces the risk of a cluster going offline, due to a witness failure.
+
+Database Mirroring
+========================================
+- Database mirroring is a technology that can provide configurations for both high availability and disaster recovery. 
+- implemented entirely within SQL Server and provides availability at the database level
+- It works by compressing transaction log records and sending them to the secondary server via a TCP endpoint.
+- A database mirroring topology consists of precisely one 
+    1. primary server, 
+    2. precisely one secondary server, and 
+    3. an optional witness server.
+- Database mirroring can be configured to run in 3 different modes: 
+    1. High Performance : database not in Sync / asynchronous manor
+    2. High Safety : 
+    3. High Safety with Automatic Failover. 
 - 
+- 
+- 
+
+
 
 
 

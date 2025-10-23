@@ -94,12 +94,15 @@ Database Mirroring
     2. precisely one secondary server, and 
     3. an optional witness server.
 - Database mirroring can be configured to run in 3 different modes: 
-    1. High Performance : database not in Sync / asynchronous manor
-    2. High Safety : 
-    3. High Safety with Automatic Failover. 
-- 
-- 
-- 
+    1. High Performance                    : database not in Sync / async manor
+    2. High Safety                         : database in sync state on primary & secondary server.
+    3. High Safety with Automatic Failover : database mirroring topology needs to form a quorum. In order to achieve quorum, it needs a third server. This server is known as the witness server
+
+- Database mirroring in high Performance Mode                       : https://drive.google.com/file/d/1zwD2pMEDn5N8v9K5oDToYRMy20j-zBaM/view?usp=sharing
+- Database mirroring in High Safety with Automatic Failover mode    : https://drive.google.com/file/d/1xat3dn1QoOMM3UqxfTkHPbKIzW4YNafR/view?usp=sharing
+- Note: 
+-------
+Tip  Database mirroring is not supported on databases that use In-Memory OLTP. You will be unable to configure database mirroring, if your database contains a memory-optimized filegroup.
 
 
 

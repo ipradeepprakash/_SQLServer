@@ -6,7 +6,9 @@ SQL Server provides a full suite of technologies for implementing high availabil
 AlwaysOn Failover Clustering
 ------------------------------
 
-Active-Passive Configuration
+--------------------------------- 2 Node cluster configurations ---------------------------------------
+
+Active-Passive Configuration (2 Node cluster)
 ...............................
 Two-Node Cluster (Active/Passive Configuration) : https://drive.google.com/file/d/1IDgXcutPmkLe_wVvHZxI-1lGIWFmYKaP/view?usp=drive_link
 
@@ -28,6 +30,47 @@ Two-Node Cluster (Active/Active Configuration)  : https://drive.google.com/file/
 >>>>>>>>>
 In an active/active cluster, it is important to consider resources in the event of failover. 
 For example, if each node in a cluster group has 128GB of RAM and the instance hosted on each node is configured to use 96GB of RAM and locking pages in memory, then when one node fails over to the other node, this node fails as well, because it does not have enough memory to allocate to both instances. Make sure you plan both memory and processor requirements as if the two nodes are a single server. For this reason, active/active clusters are not generally recommended for SQL Server.
+
+
+
+
+----------------------------- 3-Plus Node Configurations -----------------------------------
+
+When you have 3 or more nodes, it is unlikely that you will want to have a single active node and two redundant nodes, due to the associated costs. Instead, you can choose to implement an N+1 or N+M configuration.
+In an N+1 configuration, you have multiple active nodes and a single passive node. If a failure occurs on any of the active nodes, they fail over to the passive node.
+
+The diagram below depicts a three-node N+1 cluster (where N: No of Active Nodes, 1: only 1 Passive Node. any failure in active node, will result in failover to passive node, provided the passive node has enough resources to handle workloads)
+https://drive.google.com/file/d/1m-RqZhtxG8L85gA1PwS1nldQO50N5FyS/view?usp=sharing
+
+The diagram below depicts a three-node N+M cluster. (where N: No of Active Nodes, M: Many Passive Nodes. The diagram shows that Instance3 is configured to always fail over to one of the passive nodes, whereas Instance1 and Instance2 are configured to always fail over to the other passive node. we can also configure the cluster to allow any of the active nodes to fail over to either of the passive nodes )
+https://drive.google.com/file/d/152zq4TVMvyRkjamC_42jdyyvMiNp-fmo/view?usp=sharing
+
+
+Quorum
+---------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -8,7 +8,16 @@ Interview Questions: FCI (Failover Cluster Instance)
 Answer: - No
         Note that Instance Name rename is unsupported. In named instance the server name is in format of ServerName\InstanceName. So, you can change it to NewName\InstanceName but NOT to ServerName\ NewInstanceName.
 
+3) what factors detemine the UNGRACEFUL behaviour of cluster nodes?
+- depends on the parameters set in cluster node's configuration.
+- i.e specify the no of times cluster service will attempt to restart or failover clustered role in specific period.
+  >> Max failures in specified period
+  >> period (hours)
 
+  Fallback
+  - Allow Fallback
+	  >> immediately
+	  >> Feedback between 
 
 
 

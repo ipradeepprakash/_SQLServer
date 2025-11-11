@@ -1,0 +1,5 @@
+Interview Questions: DB mirroring
+----------------------------------
+
+1. Why can't we take Database mirroring for reporting activity?
+Answer: Databases in Secondary server will not be available for Reporting purpose during mirroring as the databases will be in NO RECOVERY mode.

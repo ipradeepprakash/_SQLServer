@@ -43,6 +43,7 @@ Answer:
 - Jobs: Make sure no scheduled jobs are executed during patching duration.
 - If our servers are NOT PHYSICAL, windows team can take SNAPSHOT of entire server
 
+SQ6: What is URL Routing / Read only Routing for Always On and what needs to be done from Database end?
 
 
 

@@ -1,0 +1,6 @@
+Interview Questions
+------------------------
+1. Why is logshipping not preferred for reporting?
+Answer: 
+- There will be lag/delay at the secondary.
+- If STANDY mode is chosen as restoring mode, then users have to be disconnected during restore of logs, which affects the reporting tasks for users.

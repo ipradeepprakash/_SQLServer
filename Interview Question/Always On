@@ -3,11 +3,45 @@ Interview Questions: Always On
 1. Can I create Always On between On-Premises to Azure SQL Database?  Not an Azure VM or Managed Instance. Just Azure SQL database as Secondary Replica
 Answer: No, Not possible
 
+2. do you know what is "pre-staging" of LISTENER?
+Answer:- (certain permissions needed at AD Level for cluster service account i.e ) otherwise, “Listener cannot be brought online as its in OFFLINE state” and the listener cannot be made online, it fails, because we need to do pre-staging 
+  1) Create Computer object
+  2) Read all Properties
 
+3. How will you sink the objects that are out of scope for Always on like
+    > Jobs
+    > Logins
+    > Linked servers
+    > Operators
+    > MAXDOP
+    > Credentials
+Answer: 
+- For SQL 2022 & above: Contained Databases
+- We can use dbatools (powershell module) using "copy-dbalogin"
+- We can use sp_revlogin script out logins to secondary from primary.
 
+Scenario1: changes on primary, but not done on secondary.
+-----------------------------------------------------------------------------------
+SQ1: How will you check for jobs that should run only on PRIMARY,not SECONDARY? 
+Answer: A Customised script, if job is on PRIMARY SERVER, IT WILL EXECUTE, ELSE NO.
 
+SQ2: how to sync job across all replicas from primary server?
+Answer: dbatools--Copy-dbajob: to copy logins between primary & secondary servers in Alwas On AG
 
+SQ3: how to sync logins across all replicas from primary server?
+Answer: dbatools--copy-dbalogin: to copy logins between primary & secondary servers in Alwas On AG
 
+SQ4: Have you added SSISDB & sync across all Replicas for using SSIS packages?
+Answer: All SSIS packages will be in SSISDB and add this DB in always on, so all replicas will have a copy of SSISDB with all packages.
+
+SQ5: How do you patch the replicas & primary servers?
+Answer:
+- While doing a failover, we have to change to SYNC mode.
+- Failover mode should be MANUAL.
+- Once patching is done on SECONDARY, wait for Data sync, only then failover to another instance.
+- Use GUI for Failover as it checks various parameters in the background.
+- Jobs: Make sure no scheduled jobs are executed during patching duration.
+- If our servers are NOT PHYSICAL, windows team can take SNAPSHOT of entire server
 
 
 

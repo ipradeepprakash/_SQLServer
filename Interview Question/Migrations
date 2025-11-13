@@ -11,6 +11,31 @@ Migrations Scenarios
 			· Azure SQL Managed Instance with near zero downtime (online).
 			· Azure SQL Database single database with some downtime (offline).
 		
+3) Challenges in logins for database migrations
+--------------------------------------------
+Login migration methods
+*******************************
+
+    1. SSIS Transfer Logins Task
+    ------------------------------------
+    Very painful
+    
+    · changes passwords
+    · disables account
+    · does not transfer server roles or server permission sets
+    · maintains SIDs
+    
+    2. sp_help_revlogin
+    ------------------------------------
+    Less painful, but still ..
+    
+    · maintains passwords
+    . maintains SIDs
+    · does not transfer server roles or server permission sets
+    · still manual / doesn't scale well
+    
+
+
 
 
 

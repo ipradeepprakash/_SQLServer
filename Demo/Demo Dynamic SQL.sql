@@ -36,14 +36,50 @@ choose.
 
 Dealership A wants:
 ....................
-VIN
-True Cost
-Invoice Price
+- VIN
+- True Cost
+- Invoice Price
 
 Dealership B wants:
 ...................
-VIN
-Base Model Name
-Package Name
-MSRP
+- MSRP
+- VIN
+- Base Model Name
+- Package Name
+
+Variables for Static Info
+----------------------------------------------------------------------------------------
+Allows variables to be used to specify parts of the query that can't otherwise accept variables.
+
+-- SELECT * FROM @database. dbo. Inventory # Not Allowed
+
+DECLARE @database sysname = 'AutoDealershipDemo',
+@sql nvarchar(max)
+
+SELECT @sql = 'SELECT
+FROM ' + quotename(@database) + '.dbo. Inventory'
+
+
+Delay Parsing
+----------------------------------------------------------------------------------------
+Moves the parsing of the query to run-time execution to avoid errors or allow for better error handling.
+
+SELECT UpgradeTestID, StaticColumn, DropThisColumn
+FROM DynamicSQL.UpgradeTestTable
+
+ALTER TABLE DynamicSQL.UpgradeTestTable
+DROP COLUMN DropThisColumn
+GO 2
+
+
+
+
+
+
+
+
+
+
+
+
 

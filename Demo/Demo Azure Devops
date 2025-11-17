@@ -14,12 +14,12 @@ Video Timeslines details
 34:40 - 44:32: Demo - Azure Repos
 44:32 - 47:18 : Intro Azure pipelines
 47:19 - 1:11:56: Demo Azure pipelines
-1:11:58 - : Demo Azure Testplans
-
+1:11:58 - 1:14:34: Demo Azure Testplans
+1:14:36: Demo Azure Artifacts
 
 --------------------------------------------------------------------------------------------------------------------------
 
------------------------------------------- Currently video view at: 48:24 -------------------------------------------------
+------------------------------------------ Currently video view at: 1:14:24 -------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------
 
@@ -113,7 +113,15 @@ Azure Test Plans
 . Useful for databases?
 
 
-
+Azure Artifacts
+*****************
+· Integration of packages from public and private sources
+      > Maven
+      > npm
+      > NuGet
+      > Python
+. Allows you to control access to packages across teams and projects
+. Not necessarily useful for databases
 
 
 

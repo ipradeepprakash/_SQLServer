@@ -5,7 +5,7 @@ Video Timeslines details
 0:00 - 1:00 : Introduction of Speak - Steve Jones
 1:11 - 1:30 : Agenda of the topic
 1:31 - 3:40 : Speaker's introduction w.r.t Redgate & his works.
-3:41 - 
+3:41 - : what is Azure Devops?
 
 
 Agenda
@@ -18,3 +18,20 @@ Agenda
 · Pipelines
 . Test Plans
 · Artifacts
+
+
+what is Azure Devops?
+*************************
+. The hosted version of Azure DevOps Server (formerly TFS)
+· VSTS
+· Azure DevOps
+· Available at: dev.azure.com (updates)
+· Learn more Introducing Azure DevOps
+. Tools to help teams collaborate and manage software development in one package
+. Works with any
+. Application
+. Framework
+· language
+. Platform
+. cloud
+

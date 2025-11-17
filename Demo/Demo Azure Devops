@@ -6,12 +6,14 @@ Video Timeslines details
 1:11 - 1:30 : Agenda of the topic
 1:31 - 3:40 : Speaker's introduction w.r.t Redgate & his works.
 3:41 - 10:48 : what is Azure Devops?
-10:49 - : Demo
+10:49 - 20:07: Demo on Devops Portal, Market place
+20:08 - : Demo Azure Boards
+
 
 
 --------------------------------------------------------------------------------------------------------------------------
 
------------------------------------------- Currently video view at: 20:06 -------------------------------------------------
+------------------------------------------ Currently video view at: 20:12 -------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------
 
@@ -54,6 +56,16 @@ what is Azure Devops?
     . This is free to start using
     . First 5 users free
     · Price page
+
+Azure Boards: Demo
+***************************
+· Work Tracking
+      . Kanban boards
+      · Backlogs
+      · Sprints
+      · Reporting
+. This is designed to easily help a team coordinate work
+. Code used throughout the process can be tracked here.
 
 
 

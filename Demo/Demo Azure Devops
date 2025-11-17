@@ -7,15 +7,17 @@ Video Timeslines details
 1:31 - 3:40 : Speaker's introduction w.r.t Redgate & his works.
 3:41 - 10:48 : what is Azure Devops?
 10:49 - 20:07 : Demo on Devops Portal, Market place
-20:08 - 21: 05 :Intro Azure Devops - Boards
-21:06 - 31:40: Demo Azure Devops - Boards
-31:42 - : Azure Devops - wiki
-33:35 - : Azure Devops - Azure Repos
+20:08 - 21:05 :Intro Azure Boards
+21:06 - 31:40: Demo Azure Boards
+31:42 - 33:33: Azure Devops - wiki
+33:35 - 34:38: Intro Azure Repos
+34:40 - 44:32: Demo - Azure Repos
+44:32: Demo - Azure pipelines
 
 
 --------------------------------------------------------------------------------------------------------------------------
 
------------------------------------------- Currently video view at: 21:06 -------------------------------------------------
+------------------------------------------ Currently video view at: 41:37 -------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------------------------
 
@@ -70,10 +72,32 @@ Azure Boards: Demo
 . Code used throughout the process can be tracked here.
 
 
+Azure Repos
+*****************
+Version Control for code
+. Multiple Interfaces
+      > Git
+      > TFVC
+. Pull Requests supported
+      > Link to anyone in your project
+      > Easy discussion with @ tagging
+. Full web support for VCS actions
+. Web hook and API access
+. Semantic search
+. Branch policies
 
 
-
-
+Azure Pipelines
+*****************
+· CI/CD Automation
+      > Continuous Integration
+      > Release Management
+. Multiple OS support
+      > Windows
+      > MacOS
+      > Linux
+. User local or hosted agents
+. Many third-party enhancements available
 
 
 

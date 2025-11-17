@@ -7,6 +7,11 @@ Video Timeslines details
 1:31 - 3:40 : Speaker's introduction w.r.t Redgate & his works.
 3:41 - : what is Azure Devops?
 
+--------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------ Currently video view at: 7:22 -------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------
 
 Agenda
 ***************
@@ -29,9 +34,51 @@ what is Azure Devops?
 · Learn more Introducing Azure DevOps
 . Tools to help teams collaborate and manage software development in one package
 . Works with any
-. Application
-. Framework
-· language
-. Platform
-. cloud
+      . Application
+      . Framework
+      · language
+      . Platform
+      . cloud
+
+. The main components are:
+    . Boards
+    · Repos
+    · Pipelines
+    . Test Plans
+    . Artifacts
+
+. The marketplace for enhancements
+· Pricing varies, depending on use
+    . This is free to start using
+    . First 5 users free
+    · Price page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

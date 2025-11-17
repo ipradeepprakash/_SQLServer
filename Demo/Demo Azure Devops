@@ -102,7 +102,15 @@ Azure Pipelines
 . Many third-party enhancements available
 
 
-
+Azure Test Plans
+*****************
+. Tracking for complex test scenarios
+. Script out complex manual tests
+. Include user acceptance criteria
+· Get feedback from stakeholders
+. Capture metrics and feedback
+. Run Load Tests
+. Useful for databases?
 
 
 

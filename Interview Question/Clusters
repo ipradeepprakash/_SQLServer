@@ -3,6 +3,12 @@ Interview Questions: FCI (Failover Cluster Instance)
 1. what is
   - is alive,
   - like alive
+Answer:
+- IsAlive and LooksAlive are health checks performed by the Windows Server Failover Cluster (WSFC) to monitor the active node's SQL Server instance and detect failures for failover decisions.
+- The LooksAlive : 
+	> check verifies the basic status of the SQL Server service on the active node every 5 seconds by default
+- IsAlive Check
+	> The IsAlive check performs a more thorough health assessment by executing sp_server_diagnostics or a simple query like SELECT @@SERVERNAME to ensure SQL Server accepts connections and reports no critical issues. 
 
 2. 1) Can we rename named instance name in SQL server? 
 Answer: - No

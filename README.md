@@ -1,2 +1,0 @@
-# SQLServer
-Scripts, Notes Etc

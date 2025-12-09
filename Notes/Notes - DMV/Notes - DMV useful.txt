@@ -1,0 +1,179 @@
+Notes - DMV useful
+
+
+--Query 1: User Connection & Query as a Request
+    SELECT REQ.session_id,REQ.request_id,REQ.connection_id, REQ.database_id, REQ.command, QUERY.text,REQ.start_time, REQ.task_address
+    FROM SYS.dm_exec_requests req Cross apply sys.dm_exec_sql_text (req.sql_handle) as query WHERE req.session_id = <SPID here> -- *****SPID of your query that is running*****
+
+--Query 2: Request is divided into Task(s) -- ***** Mention SPID of your query that is running*****
+    SELECT REQ.session_id,REQ.request_id,REQ.connection_id,REQ.database_id,REQ.command,QUERY.text, REQ.start_time,task.task_address, task.task_state, task.parent_task_address 
+    FROM SYS.dm_exec_requests req INNER JOIN sys.dm_os_tasks task on req.task_address = task.task_address or req.task_address = task.parent_task_address
+    Cross apply sys.dm_exec_sql_text (req.sql_handle) as query WHERE req.session_id = <SPID here>
+
+--Query 3: Each Task is assigned to a Worker (an available worker) -- ***** Mention SPID of your query that is running*****
+      SELECT REQ.session_id,REQ.request_id,REQ.connection_id,REQ.database_id,REQ.command,QUERY.text, REQ.start_time,  task.task_address,task.task_state,worker.state as Worker_state,task.parent_task_address,worker.worker_address,worker.last_wait_type
+      FROM SYS.dm_exec_requests req INNER JOIN sys.dm_os_tasks task on req.task_address = task.task_address or req.task_address = task.parent_task_address
+      INNER JOIN SYS.dm_os_workers WORKER ON TASK.task_address = WORKER.task_address Cross apply sys.dm_exec_sql_text (req.sql_handle) as query
+      WHERE req.session_id = 55 -- ***** Mention SPID of your query that is running*****
+
+--Query 4: Each Worker is associated with a Thread
+      SELECT REQ.session_id,REQ.request_id,REQ.connection_id,REQ.database_id, REQ.command,QUERY.text, REQ.start_time,task.task_address,task.task_state,worker.state as Worker_State,task.parent_task_address,worker.worker_address,thread.thread_address,thread.priority, thread.processor_group, thread.started_by_sqlservr,worker.last_wait_type
+      FROM SYS.dm_exec_requests req INNER JOIN sys.dm_os_tasks task on req.task_address = task.task_address or req.task_address = task.parent_task_address
+      INNER JOIN SYS.dm_os_workers WORKER ON TASK.task_address = WORKER.task_address
+      INNER JOIN sys.dm_os_threads thread on worker.thread_address = thread.thread_address
+      Cross apply sys.dm_exec_sql_text (req.sql_handle) as query WHERE req.session_id = <SPID here>
+
+--Query 5: Schedulers associated with CPU schedules CPU time for Workers
+    SELECT REQ.session_id,REQ.request_id,REQ.connection_id,REQ.database_id,REQ.command,QUERY.text, REQ.start_time,task.task_state,worker.state as 'WorkerState', sch.status as 'SchedulerStatus',sch.runnable_tasks_count, sch.scheduler_id, sch.cpu_id, thread.priority as 'thread priority', worker.last_wait_type,thread.processor_group,thread.started_by_sqlservr as 'ThreadStartedByMSSQL', sch.scheduler_address,task.task_address,task.parent_task_address,worker.worker_address,thread.thread_address
+    FROM SYS.dm_exec_requests req INNER JOIN sys.dm_os_tasks task
+    on req.task_address = task.task_address or req.task_address = task.parent_task_address
+    INNER JOIN SYS.dm_os_workers WORKER ON TASK.task_address = WORKER.task_address INNER JOIN sys.dm_os_threads thread on worker.thread_address = thread.thread_address
+    INNER JOIN sys.dm_os_schedulers sch on sch.scheduler_address = worker.scheduler_address Cross apply sys.dm_exec_sql_text (req.sql_handle) as query --WHERE req.session_id = <SPID here> order by sch.scheduler_id asc
+
+-- Tasks, Workers, Threads
+
+    Select
+    (Select max_workers_count from sys.dm_os_sys_info) as 'WorkerThreadsPossible',
+    SUM(active_Workers_count) as 'WorkerThreadsActive',
+    (select max_workers_count from sys.dm_os_sys_info) - SUM(active_Workers_count) as 'WorkerThreadsAvailable',
+    SUM(runnable_tasks_count) as 'WorkerThreadsWaitingForCPU',
+    SUM(work_queue_count) as 'TasksWaitingForWorkerThread'
+    from sys.dm_os_Schedulers
+    where status='VISIBLE ONLINE'
+
+-- Scripts: (for testing - execute a user query in a loop & then execute all these queries together in a separate batch)
+
+--Query 1: User Connection & Query as a Request -- ***** Mention SPID of your query that is running*****
+    SELECT REQ.connection_id, REQ.database_id, REQ.session_id, REQ.command, REQ.request_id,
+    REQ.start_time, REQ.task_address, QUERY.text
+    FROM SYS.dm_exec_requests req Cross apply sys.dm_exec_sql_text (req.sql_handle) as query
+    WHERE req.session_id = 103 -- *****SPID of your query that is running*****
+
+--Query 2: Request is divided into Task(s) -- ***** Mention SPID of your query that is running*****
+    SELECT task.task_address, task.parent_task_address, task.task_state, REQ.request_id, REQ.database_id, REQ.session_id,
+    REQ.start_time, REQ.command, REQ.connection_id, REQ.task_address, QUERY.text
+    FROM SYS.dm_exec_requests req INNER JOIN sys.dm_os_tasks task on req.task_address = task.task_address or req.task_address = task.parent_task_address
+    Cross apply sys.dm_exec_sql_text (req.sql_handle) as query
+    WHERE req.session_id = 103
+
+--Query 3: Each Task is assigned to a Worker (an available worker) -- ***** Mention SPID of your query that is running*****
+    SELECT worker.worker_address, worker.last_wait_type, worker.state, task.task_address, task.parent_task_address,
+    task.task_state, REQ.request_id, REQ.database_id, REQ.session_id, REQ.start_time, REQ.command, REQ.connection_id,
+    REQ.task_address, QUERY.text
+    FROM SYS.dm_exec_requests req INNER JOIN sys.dm_os_tasks task on req.task_address = task.task_address or req.task_address = task.parent_task_address
+    INNER JOIN SYS.dm_os_workers WORKER ON TASK.task_address = WORKER.task_address Cross apply sys.dm_exec_sql_text (req.sql_handle) as query
+    WHERE req.session_id = 103
+
+--Query 4: Each Worker is associated with a Thread -- ***** Mention SPID of your query that is running*****
+    SELECT thread.thread_address, thread.priority, thread.processor_group, thread.started_by_sqlservr, worker.worker_address,
+    worker.last_wait_type, worker.state, task.task_address, task.parent_task_address, task.task_state, REQ.request_id,
+    REQ.database_id, REQ.session_id, REQ.start_time, REQ.command, REQ.connection_id, REQ.task_address, QUERY.text
+    FROM SYS.dm_exec_requests req INNER JOIN sys.dm_os_tasks task
+    on req.task_address = task.task_address or req.task_address = task.parent_task_address
+    INNER JOIN SYS.dm_os_workers WORKER ON TASK.task_address = WORKER.task_address
+    INNER JOIN sys.dm_os_threads thread on worker.thread_address = thread.thread_address
+    Cross apply sys.dm_exec_sql_text (req.sql_handle) as query
+    WHERE req.session_id = 103
+
+--Query 5: Schedulers associated with CPU schedules CPU time for Workers -- ***** Mention SPID of your query that is running*****
+
+      SELECT sch.scheduler_address, sch.runnable_tasks_count, sch.scheduler_id, sch.cpu_id, sch.status as 'SchedulerStatus', thread.thread_address, thread.priority as 'thread priority', thread.processor_group,
+      thread.started_by_sqlservr as 'ThreadStartedByMSSQL', worker.worker_address, worker.last_wait_type, worker.state as 'WorkerState', task.task_address, task.parent_task_address,
+      task.task_state, REQ.request_id, REQ.database_id, REQ.session_id, REQ.start_time, REQ.command, REQ.connection_id, REQ.task_address, QUERY.text
+      FROM SYS.dm_exec_requests req INNER JOIN sys.dm_os_tasks task
+      on req.task_address = task.task_address or req.task_address = task.parent_task_address
+      INNER JOIN SYS.dm_os_workers WORKER ON TASK.task_address = WORKER.task_address
+      INNER JOIN sys.dm_os_threads thread on worker.thread_address = thread.thread_address
+      INNER JOIN sys.dm_os_schedulers sch on sch.scheduler_address = worker.scheduler_address
+      Cross apply sys.dm_exec_sql_text (req.sql_handle) as query
+      --WHERE req.session_id = 103
+      order by sch.scheduler_id asc
+
+
+------------------------ Tasks, Workers, Threads----------------------
+
+    Select
+    (Select max_workers_count from sys.dm_os_sys_info) as 'WorkerThreadsPossible',
+    SUM(active_Workers_count) as 'WorkerThreadsActive',
+    (select max_workers_count from sys.dm_os_sys_info) - SUM(active_Workers_count) as 'WorkerThreadsAvailable',
+    SUM(runnable_tasks_count) as 'WorkerThreadsWaitingForCPU',
+    SUM(work_queue_count) as 'TasksWaitingForWorkerThread'
+    from sys.dm_os_Schedulers
+    where status='VISIBLE ONLINE'
+/*
+  active_workers_count: Number of workers that are active. An active worker is never preemptive, must have an associated task, and is either running, runnable, or suspended. Is not nullable.
+  runnable_tasks_count: Number of workers, with tasks assigned to them, that are waiting to be scheduled on the runnable queue. Is not nullable.
+  work_queue_count: Number of tasks in the pending queue. These tasks are waiting for a worker to pick them up.
+
+*/
+
+
+------------------------ Active Requests Query:----------------------
+
+    SELECT
+    s.Session_id, r.Status,r.open_transaction_count as 'TRX_Open', --Number of transactions that are open for this request
+    r.blocking_session_id 'Blk by',r.Wait_Type, --If the request is currently blocked, this column returns the type of wait.
+    r.Last_Wait_Type, --If this request has previously been blocked, this column returns the type of the last wait.
+    r.Wait_Resource, --If the request is currently blocked, this column returns the resource for which the request is currently waitin
+    r.Wait_Time / (1000.0) 'Wait Sec', --If the request is currently blocked, this column returns the duration in milliseconds, of the current wait.
+    r.CPU_Time, --CPU time in milliseconds that is used by the request
+    r.Logical_Reads,r.Reads,r.Writes,r.total_elapsed_time / (1000.0) 'Elaps Sec', --otal time elapsed in milliseconds since the request arrived
+    db_name(r.database_id) as DBName,'"'+Substring(st.TEXT,(r.statement_start_offset / 2) + 1,((CASE r.statement_end_offset
+    WHEN -1
+    THEN Datalength(st.TEXT)
+    ELSE r.statement_end_offset
+    END - r.statement_start_offset) / 2) + 1)+'"' AS Statement_Text,
+    '"'+Coalesce(Quotename(Db_name(st.dbid)) + N'.' + Quotename(Object_schema_name(st.objectid,st.dbid))
+    + N'.' + Quotename(Object_name(st.objectid,st.dbid)),
+    '')+'"' AS Command_Text,r.command,s.login_name,s.host_name,s.program_name,s.last_request_end_time,
+    s.login_time,r.open_transaction_count
+    FROM sys.dm_exec_sessions AS s JOIN sys.dm_exec_requests AS r ON r.session_id = s.session_id
+    CROSS APPLY sys.Dm_exec_sql_text(r.sql_handle) AS st WHERE r.session_id != @@SPID
+    ORDER BY r.cpu_time desc, r.status, r.blocking_session_id, s.session_id
+
+------------------------ Lists runnable queries:--------------------------------------------
+-- Runnable queues are those queues waiting for CPU time. Signal waits are the time spent in the runnable queue waiting for the CPU.
+
+    select scheduler_id, session_id, status, command from sys.dm_exec_requests where status = 'runnable' and session_id > 50 order by scheduler_id
+    
+
+
+------------------------ Monitoring: --------------------------------------------
+
+-- Threads that are running under the SQL Server process.
+/*
+1 = SQL Server started the thread.
+0 = Another component started the thread, such as an extended stored procedure from within SQL Server. SQL Server has no control of these threads. sys.dm_os_threads can provide information about rogue threads that consume resources in the SQL Server process.
+
+*/
+
+    SELECT * FROM sys.dm_os_threads WHERE started_by_sqlservr = 1;
+    SELECT * FROM sys.dm_os_threads WHERE started_by_sqlservr = 0;
+    
+
+---------------------- workers that are running in the system---------------------------------
+/*
+
+    state field:
+    Worker state. Can be one of the following values:
+    INIT = Worker is currently being initialized.
+    RUNNING = Worker is currently running either nonpreemptively or preemptively.
+    RUNNABLE = The worker is ready to run on the scheduler.
+    SUSPENDED = The worker is currently suspended, waiting for an event to send it a signal.
+*/
+select state, count(*) from sys.dm_os_workers group by state
+select * from sys.dm_os_workers
+SELECT SUM(current_workers_count) as [Current worker thread] FROM sys.dm_os_schedulers
+
+
+------------------------ Genreal OS info & SQL restart time ----------------------
+    select sqlserver_start_time,virtual_machine_type_desc,socket_count,cores_per_socket,cpu_count,physical_memory_kb,virtual_memory_kb,committed_kb,committed_target_kb,scheduler_count,scheduler_total_count,numa_node_count,sql_memory_model_desc
+    from sys.dm_os_sys_info
+    
+-- Messages from SQL Server re: Threads:
+    select * from sys.messages where language_id = 1033 and text like '%Thread%'
+
+
+
+
+

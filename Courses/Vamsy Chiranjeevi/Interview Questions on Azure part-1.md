@@ -3,23 +3,25 @@ Reference:
 - https://drive.google.com/file/d/1tN2Wne_81LgaYxIpC0LdkbbHxYkaOEgm/view
 - https://youtu.be/DufC1SQd5bg
 
-## Basic questions
+# Basic questions
 
-### 1. What are all the cloud models available w.r.t to database realm?
+## 1. What are all the cloud models available w.r.t to database realm?
 
 - Iaas 	: VM, Storage
 - Paas 	: Azure SQL DB, Azure MI
 - Saas 	: n/a
 
-### 2. Have you worked on Database Migrations?
+## 2. Have you worked on Database Migrations?
 
-A. Iaas (ask more questions)
--  If worked only on Iaas - briefly answer only related to Iaas, if no work done on Paas, its ok.
+## _A. Iaas (ask more questions)_*
 
-B. My question to interviewer
+### If worked only on Iaas - briefly answer only related to Iaas, if no work done on Paas, its ok.
 
-- If client willing to go with the OS (Operating system) (No - rule out the need for PaaS)
-- Does the client need any components like (if Yes and need Pass features  - not native flavours, i.e. Power BI for SSRS, ADF for SSIS, SSAS - Azure datawarehouse / Azure synapse )
+### My question to interviewer
+
+#### 1. If client willing to go with the OS (Operating system) (No - rule out the need for PaaS)
+
+#### 2. Does the client need any components like (if Yes and need Pass features  - not native flavours, i.e. Power BI for SSRS, ADF for SSIS, SSAS - Azure datawarehouse / Azure synapse )
             SSIS (supported in Azure VM)
             SSAS  (supported in Azure VM)
             SSRS  (supported in Azure VM)
@@ -48,11 +50,35 @@ B. My question to interviewer
     - If there is Always ON between On-Prem & Azure VM, there is a **BIG LIMITATION**. If there is very less downtime for migration, then all the nodes(Node1, Node2) in On-Prem & nodes (Node3, Node4) in Azure VM **SHOULD BE UNDER THE SAME WINDOWS CLUSTER GROUP**. Though very risky, Only then migration will happen.
 
 
+    #### 4.4. For SQL 2016 and Higher versions >>  
+    - If there is always ON between On-prem ( windows cluster1 node1,Node2) & Azure VM ( windows cluster2 Node3,Node4), then we can configure Always on from On-Prem to Azure cloud (also called Distributed AO AG)
 
 
 
+### 5. How to choose the right series of CPU, RAM etc?
+- Use azure Data studio and input the values in source details, destination details will be analyzed and recommended accordingly.
+- For general optimized performance, use E Series : EBS_V4 (memory optimized) for SQL server.
+- How to calculate IOPS on an on-prem SQL server to match that of Azure VM?
+- There are 2 types of Apps
+
+        CPU bound: look for CPU cycles.
+        IO bound: look for IOPS
+
+## _B. PaaS  (ask more questions)_
+### What is DB size
+
+1. If size >> 16 TB, cant go with Azure MI instance.(for Business Critical)
+2. If size <= 4 TB, only in the General category.
+
+### Are SQL agent jobs required? DB Mail, support for cross db queries, linked servers, windows auth (all these are possible in MI instance, not Azure SQL)
+
+### Native Backups restore from .bak files
+- Because Azure SQL does not support .bak restore, but MI instance does.
 
 
+## Note: 
+- Azure MI: Instance as a service
+- Azure SQL : database as a service
 
 
 

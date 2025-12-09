@@ -71,7 +71,33 @@ ALTER TABLE DynamicSQL.UpgradeTestTable
 DROP COLUMN DropThisColumn
 GO 2
 
+Ways to Write Dynamic SQL
+***********************************
+Method1: EXEC (@sql)
 
+Method2: EXEC sp_executesql@sql
+Allows for parameters to be passed in and out of the statement
+
+Method3: EXEC sp_MSforeachdb @sql -- Not documented or officially supported
+
+
+'
+
+use AdventureWorks2016
+go
+select top 10 * from HumanResources.JobCandidate
+
+-- Dynamic SQL
+-- SAmple 1
+declare @SQL nvarchar(max)
+select @sql = N'select ''initial test'''
+exec sys.sp_executesql @sql
+
+-- Sample 2
+declare @SQl1 nvarchar(max)
+select @sql1 = N'select top 10 * from HumanResources.JobCandidate'
+exec (@sql1)
+exec sys.sp_executesql @sql1
 
 
 

@@ -1,0 +1,100 @@
+Ch 1- HADR Concepts
+-----------------
+
+CHAPTER 1: High Availability and Disaster Recovery Concepts
+-------------------------------------------------------
+
+Concept of HA (High Availability)
+.....................................
+In today’s 24×7 environments that are running mission critical applications, businesses rely heavily on the availability of their data. Although servers and their software are generally reliable, there is always the risk of a hardware failure or a software bug, each of which could bring a server down. 
+To mitigate these risks, business-critical applications often rely on redundant hardware to provide fault tolerance. If the primary system fails, then the application can automatically fail over to the redundant system. This is the underlying principle of high availability (HA).
+P.S: Failover to Secondary server in case of Primary server issues is HA (High availability)
+
+Concept of DR (Disaster Recovery)
+..................................
+Even in case of issue in primary server, Critical applications may require a redundant server to hold a synchronized copy of the data in a secondary location. This is the underpinning concept of disaster recovery (DR).
+P.S: Relying on synchronized data on secondary server is Disaster Recovery (DR)
+
+Level of Availability
+.....................
+The level of availability is measured as a percentage of the time that the application or server is available. 
+Companies often strive to achieve 99 percent, 99.9 percent, 99.99 percent, or 99.999 percent availability. As a result, the level of availability is often referred to in 9s. 
+
+For example, 
+five 9s of availability means 99.999 percent uptime and 
+three 9s means 99.9 percent uptime.
+
+Table 1-1 
+------------
+details the amount of acceptable downtime per week, per month, and per year for each level of availability.
+
+Table 1-1. Levels of Availability
+
+Level of Availability		Downtime Per Week			          Downtime Per Month			          Downtime Per Year
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+99%				              1 hour, 40 minutes,48 seconds		7 hours, 18 minutes,17 seconds		3 days, 15 hours,39 minutes, 28 seconds
+99.9%				            10 minutes, 4 seconds			      43 minutes, 49 seconds			      8 hours, 45 minutes,56 seconds
+99.99%				          1 minute				                4 minutes, 23 seconds			        52 minutes, 35 seconds
+99.999%				          6 seconds				                26 seconds				                5 minutes, 15 seconds
+
+
+
+Listing 1-1. Calculating the Level of Availability
+-- Uptime availability
+DECLARE @Uptime DECIMAL(5,3) ;
+
+--Specify the uptime level to calculate
+SET @Uptime = 99.9 ;
+
+DECLARE @UptimeInterval VARCHAR(5) ;
+
+--Specify WEEK, MONTH, or YEAR
+SET @UptimeInterval = 'YEAR' ;
+
+DECLARE @SecondsPerInterval FLOAT ;
+
+--Calculate seconds per interval
+
+SET @SecondsPerInterval =
+(
+SELECT CASE
+        WHEN @UptimeInterval = 'YEAR'
+                THEN 60*60*24*365.243
+        WHEN @UptimeInterval = 'MONTH'
+                THEN 60*60*24*30.437
+        WHEN @UptimeInterval = 'WEEK'
+                THEN 60*60*24*7
+        END
+) ;
+
+DECLARE @UptimeSeconds DECIMAL(12,4) ;
+
+--Calculate uptime
+
+SET @UptimeSeconds = @SecondsPerInterval * (100-@Uptime) / 100 ;
+
+--Format results
+SELECT
+    CONVERT(VARCHAR(12), FLOOR(@UptimeSeconds /60/60/24))   + ' Day(s), '
+  + CONVERT(VARCHAR(12), FLOOR(@UptimeSeconds /60/60 % 24)) + ' Hour(s), '
+  + CONVERT(VARCHAR(12), FLOOR(@UptimeSeconds /60 % 60))    + ' Minute(s), '
+  + CONVERT(VARCHAR(12), FLOOR(@UptimeSeconds % 60))        + ' Second(s).' 
+  
+  as  'Level of Availability'  ;
+
+Service-Level Agreements (SLA) and Service-Level Objectives (SLO)
+*******************************************************************
+SLA:
+- how much downtime is acceptable for a server, the maximum length of time a server can be down in the event of failure
+- how much data loss is acceptable if failure occurs. 
+
+SLOs 
+- are very similar in nature to SLAs, but do not impose financial penalties on the IT department in the event of failure & when the objectives that they are not met. It’s more of a commitment to improve.
+
+Recovery Point Objective (RPO) and Recovery Time Objective (RTO)
+*******************************************************************
+Recovery point objective (RPO):
+- Indicates how much data loss is acceptable in the event of a failure.
+
+Recovery time objective (RTO) 
+- Specifies the maximum amount of time an application can be down before recovery is complete and users can reconnect.

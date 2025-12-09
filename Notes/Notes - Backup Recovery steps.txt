@@ -1,0 +1,142 @@
+Notes - Backup Recovery steps
+--------------------
+RESTORES & DB RECOVERY
+
+- Restore Phases - COPY, REDO, UNDO
+- STATS, UNLOAD, STOPAT and INIT
+- Standby Restores and REPLACE, Read-Only State in restore
+- RECOVERY, NORECOVERY Options
+- File, File Group & Metadata Restores (piecemeal restore)
+- Backup Verifications using GUI, Scripts
+- VERIFYONLY : Backup Verification
+- PARTIAL / PIECEMEAL Restores - Use
+- Tail Log Backup Usage in Real-time
+- Restores using GUI and T-SQL Scripts
+- MOVE Option n  s for File Level Restores
+- Point-In-Time Restore, Checkpoint LSN
+
+Recovery: Types
+
+	Piecemeal recovery: 
+		useful in data warehouse databases. Here, the restoration of database take place at filegroup level beginning with
+			▪ Primary file group, 
+			▪ read-write filegroup & 
+			▪ secondary file groups.
+		If the database is as huge, let's say 4TB (primary filegroup - 1TB with read-write, other file group - 3TB) . 
+		Piecemeal restore sequence allows to restore Primary file group first & brings database online, while recovery
+		of transactions from primary are being recovered, other filegroups will be recovered accordingly.
+	
+	Restore database options
+		○ verifyonly
+		○ verifyonly with checksum
+		-- check if backup can be read & restored
+			https://solutioncenter.apexsql.com/verifying-sql-database-backups-automatically/
+			
+			restore verifyonly from 
+			disk = 'D:\ARCHIVE\WideWorldImportersFull1.bak'
+	
+		-- check if backups are reliable w.r.t data structure (works only if backup was done with checksum option)
+			restore verifyonly from 
+			disk = 'D:\ARCHIVE\WideWorldImportersFull1.bak' with CHECKSUM
+
+RECOVERY, NORECOVERY Options
+	https://phoenixultd.wordpress.com/2016/04/20/recovery-vs-norecovery-vs-standby/
+	
+	When restoring a database you can specify one of three recovery options; 
+		○ RECOVERY, 
+		○ NORECOVERY and 
+		○ STANDBY.
+	
+		RECOVERY
+		RECOVERY is The default option. This indicates that the restore is complete and that once RESTORE is complete it is fully available
+		
+		NORECOVERY
+		The database is in a state of RESTORING even after this RESTORE is complete as there are further RESTORE statements expected the database cannot be read from or written to.
+		
+		STANDBY
+		Similar to NORECOVERY except that the database will accept read only connections. 
+
+
+Restoring encrypted backups
+**************************
+https://www.sqlshack.com/restoring-transparent-data-encryption-tde-enabled-databases-on-a-different-server/
+
+	Enable encryption on source database
+	------------------------------------------------------
+	Step1: create a master encrytpion key
+	Step2: create certificate in Master database.
+	Step3: create DEK (database encryption key) on required database.
+	Step4: backup database
+	
+	Restore encrypted database
+	--------------------------------------------------------
+	Step1: Backup the certificate on the source server
+	Step2: Copy the backup file and create a certificate from the file
+	Step3: Restore the database backup
+	
+Restore a database containing columns protected with Always Encrypted.
+
+If you restored the database on a different server or under a different name, you don't need to do anything special to enable the application to query the encrypted data in the target database, as the keys in both databases are the same.
+
+
+Page levedatal base restore
+****************************
+	https://www.sqlshack.com/how-to-perform-a-page-level-restore-in-sql-server/
+	https://www.mssqltips.com/sqlservertip/5708/how-to-perform-an-online-page-level-restore-in-sql-server/
+	
+	To identify corrupted pages, look for pages marked as “suspect” in the table, msdb syspect_pages.
+	SELECT * from msdb.dbo.suspect_pages
+	In the restore page window, click the button at the top, Check Database Pages. This would identify the pages that it suspects are inconsistent, by executing the DBCC command, DBCC CHECKDB PHYSICAL_ONLY.
+	
+	
+Restore data using a specific LSN
+https://www.sqlshack.com/go-lsn-in-sql-server/
+	
+	As we said before, there is no way to do a go LSN, but we can restore data using the LSN. The following example will show how to restore data in a specific LSN:
+	1	RESTORE LOG customer FROM DISK = 'c:\backup\customer.bak'   
+	2	WITH STOPATMARK = 'lsn:12000000050000037'  
+	3	GO
+	The following command will restore the transaction log backup from a specified LSN. The WITH STOPATMARK allows writing the transaction log LSN.
+
+	
+Back Up and Restore Replicated Databases
+--------------------------------------------
+https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2012/ms151152(v=sql.110)?redirectedfrom=MSDN
+
+    Backup Settings for Transactional Replication
+    ******************************************
+    Transactional replication includes using the sync with backup option, which can be set on the distribution database and the publication database:
+
+        • Set this option ALWAYS on Distribution.
+        Setting this option ensures that Log transactions are not truncated in publication till they are backed up in Distributor.
+        
+        • Setting this option on Publication, if app can tolerate latency.
+        Will ensure that at publication the transactions at are not reaching distribution until they are backed up in publication.
+        
+    Restoring databases with Replication
+    ******************************************
+        If you restore a backup of a SERVER X replicated database to another  SERVER Y database, replication settings cannot be preserved. In this case, you must recreate all publications and subscriptions after backups are restored.
+
+Publisher
+---------------
+There are restore steps provided for the following types of replication:
+
+	• Snapshot replication
+	• Read-only transactional replication
+	• Transactional replication with updating subscriptions
+	• Peer-to-peer transactional replication
+
+Publication Database: Snapshot Replication
+	• Restore the latest backup of the publication database. Go to step 2.
+	• Does the publication database backup contain the latest configuration for all publications and subscriptions? 
+	If yes, the restore is completed. If no, go to step 3.
+	• Remove the replication configuration from the Publisher, Distributor and Subscribers, and then re-create the configuration. Restore is completed.
+
+
+Publication Database: Read-Only Transactional Replication
+Publication Database: Transactional Replication with Updating Subscriptions
+Publication Database: Peer-to-Peer Transactional Replication
+
+Strategies for Backing Up and Restoring Merge Replication
+https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2012/ms152497(v=sql.110)
+

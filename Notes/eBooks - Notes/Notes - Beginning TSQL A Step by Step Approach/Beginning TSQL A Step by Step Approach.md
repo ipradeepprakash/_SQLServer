@@ -1,6 +1,4 @@
-# eBook - Beginning TSQL A Step by Step Approach
-	- Kathi Kellenberger, 
-	- Lee Everest
+# eBook - Beginning TSQL A Step by Step Approach - Kathi Kellenberger, Lee Everest
 
 ## The book is broken down like this:
 • Chapters 1 and 2 provide an introduction to databases and some background information you'll need to understand to read the rest of the book.
@@ -227,5 +225,6 @@ use WideWorldImporters
 	
 
 -- sp_help 'Sales.Customers'
+
 
 

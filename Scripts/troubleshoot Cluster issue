@@ -1,0 +1,6 @@
+
+Cluster issue Troubleshot
+-----------------------------
+you can run the below command and see at what time these events are happening
+Get-EventLog -LogName "System" | ?[$ _. Message -like "*The Volume Shadow Copy service entered the stopped state .* "] | Out-GridView
+

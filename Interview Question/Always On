@@ -48,6 +48,26 @@ SQ6: What is URL Routing / Read only Routing for Always On and what needs to be 
 /*---------------------------------------------------------------*/
 
 
+Diiferent types of Availability groups
+****************************************
+- Traditional Availability Groups (Available from SQL 2012)
+- Distributed Availability Groups (Available from SQL 2016)
+- Cluster less Availability Groups (Available from SQL 2017)
+- Contained Availability Groups (Available from SQL 2022)
+- Domain-independent Availability groups (available from Windows 2016 and 2012 R2 with few exceptions)
+- Cross Domain Availability Groups(available from Windows 2016)
+
+When we have Standard Edition then we can create
+------------------------------------------------
+- Basic Availability Groups (Available from SQL 2016)
+- Contained Availability Groups (Available from SQL 2022)
+
+Coming to Azure Virtual Machines (IAAS)
+-------------------------------------------------
+As Broad casting ARP protocol is disabled we need to leverage either Load Balancer (VNN) or DNN (Distributed Network Name) to Configure either
+Traditional Availability Groups or Distributed Availability Groups when we are on Single Subnet if not then it will be multi subnet where the
+configuration looks more similar to that of on-premises with few exceptions though.
+
 
 
 

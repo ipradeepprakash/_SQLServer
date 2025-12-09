@@ -5,13 +5,13 @@ Reference:
 
 ## Basic questions
 
-1. What are all the cloud models available w.r.t to database realm?
+### 1. What are all the cloud models available w.r.t to database realm?
 
 - Iaas 	: VM, Storage
 - Paas 	: Azure SQL DB, Azure MI
 - Saas 	: n/a
 
-2. Have you worked on Database Migrations?
+### 2. Have you worked on Database Migrations?
 
 A. Iaas (ask more questions)
 -  If worked only on Iaas - briefly answer only related to Iaas, if no work done on Paas, its ok.
@@ -23,12 +23,12 @@ B. My question to interviewer
             SSIS (supported in Azure VM)
             SSAS  (supported in Azure VM)
             SSRS  (supported in Azure VM)
-3. If the app existing one or the New/redesigned app.
+### 3. If the app existing one or the New/redesigned app.
 
 - If an existing app cannot make any code changes then - Azure MI, Azure SQL so, it will be a direct migration step with Backup & restore to MI,Azure SQL. else, it will be a migration to Azure VM similar to on-prem SQL.
 - If a new app - ppl go with Azure SQL.
 
-4. If my source is 
+### 4. If my source is 
 - Source: SQL 2008, Destination : azure VM
 - Source:SQL 2012/SQL 2014, Destination : azure VM
 - Source:SQL 2016 & greater version, Destination : azure VM

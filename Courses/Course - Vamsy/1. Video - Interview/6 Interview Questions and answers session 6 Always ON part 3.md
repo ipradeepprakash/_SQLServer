@@ -61,8 +61,7 @@ Can we create statistics on secondary replicas?**
 - for select queries with predicates, SQL Server will create column level statistics.
 - if you turn on read workloads on secondary,it will create column level statistics inside the tempdb.
 
-
-![Ignore_Replica](https://drive.google.com/drive/u/0/folders/1t9ifdKo1n6qsYBY63Jj8z3dlLvIxGVlG)
+![IgnoreReplica] (https://drive.google.com/drive/u/0/folders/1t9ifdKo1n6qsYBY63Jj8z3dlLvIxGVlG)
 
 
 

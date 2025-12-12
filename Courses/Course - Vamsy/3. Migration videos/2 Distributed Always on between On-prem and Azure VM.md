@@ -22,7 +22,13 @@ Use DAG if the source (on-Prem with difft domain) & destination (Azure with diff
 1. Select cluadmin from windows & proceed to add nodes to cluster with all details
 ![1 Select cluadmin from windows - proceed to add nodes](https://drive.google.com/file/d/1IgKz3YO_NFwTQRWzMByWuRzIOnHzPrXL/view?usp=drive_link)
 
+Note: same screen will not  be visible in Azure VM since it follows DHCP protocol & allocates any of the IP’s available with its node.
 
+### Create a different cluster on Azure VM
+—-------------------------------------------------
+- Similar steps as above, but at below step, we need to validate & correct the IP as Azure VM will follow DHCP protocol & takes any of the Nodes IP. ![2 correct the IP as Azure VM will follow DHCP protocol](https://drive.google.com/file/d/1mqp1qnlBxOWL8NsBHAqEmUsu_mbJMQEq/view?usp=drive_link)
+- 
+- 
 
 
 

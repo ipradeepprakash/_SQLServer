@@ -43,6 +43,7 @@ If there are 30 tables in DB, index rebuild has done 25 tables rebuild, if we st
 - Can be interrupted and can start from where it stopped.
 
 
+<<<<<<< HEAD
 **Index rebuild**:
 - cannot be interrupted as restart will again start rebuilding from 1st table.
 - From SQL 2017, there is Resume-online index rebuild feature.
@@ -74,3 +75,8 @@ If there are 30 tables in DB, index rebuild has done 25 tables rebuild, if we st
 
 
 
+=======
+Index rebuild cannot be interrupted as restart will again start rebuilding from 1st table.
+From SQL 2017, there is Resume-online index rebuild feature.
+Until SQL 2016 versions, all rebuild index operations cannot be interrupted. It is wither full task completion or rollback to the beginning.
+>>>>>>> 4fa0c2b080f8aad658f8fd81ea5e3eaf2bc85241

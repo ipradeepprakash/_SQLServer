@@ -27,7 +27,7 @@ Note: same screen will not  be visible in Azure VM since it follows DHCP protoco
 ### Create a different cluster on Azure VM
 —-------------------------------------------------
 - Similar steps as above, but at below step, we need to validate & correct the IP as Azure VM will follow DHCP protocol & takes any of the Nodes IP. ![2 correct the IP as Azure VM will follow DHCP protocol](https://drive.google.com/file/d/1mqp1qnlBxOWL8NsBHAqEmUsu_mbJMQEq/view?usp=drive_link)
-- 
+- In Azure VM, while configuring cluster, NO IP will be asked, instead it asks for cluster name. I.e. it goes with DNN (distributed Network Name) ![it goes with DNN](https://drive.google.com/file/d/1hbNrUAaPuii1zTWzmJXBLEi6PolBJ8AA/view?usp=drive_link)
 - 
 
 

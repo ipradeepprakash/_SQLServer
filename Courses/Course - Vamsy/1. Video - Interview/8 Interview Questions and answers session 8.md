@@ -6,7 +6,7 @@ Video reference:
 
 Video timeline:
 --------------
-0:00 - 4:21 // introduction on Cloud services
-4:22 - // difference between Azure, AWS.
+    0:00 - 4:21 // introduction on Cloud services
+    4:22 - // difference between Azure, AWS.
 
 

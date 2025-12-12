@@ -8,6 +8,7 @@ Use DAG if the source (on-Prem with difft domain) & destination (Azure with diff
 - DAG works/supports from SQL 2016 version.
 - DAG works between 2/more different clusters.
 
+![DAG Basic Criteria](https://drive.google.com/file/d/1xeAHjAyeOprCilZtMuK2yXINuNQ3ce7i/view?usp=drive_link)
 
 
 

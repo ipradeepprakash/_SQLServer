@@ -52,12 +52,13 @@
         - DAG can have different compatible versions in different clusters across regions.
 
 
-33:20 - 45:53 // time-out error between primary & secondary replicas, how to troubleshoot?
-—-------------------------------------------------------------------
+**33:20 - 45:53 // time-out error between primary & secondary replicas, how to troubleshoot?**
+
 Couple of reasons why it could happen
-Network issues between primary & secondary replicas.
-Any changes in firewall rules.
-VMware snapshots: causes the servers/nodes/replicas will freeze when VM level backup happens & nodes will lose connection due to idleness/no response.
+- Network issues between primary & secondary replicas.
+- Any changes in firewall rules.
+- VMware snapshots: causes the servers/nodes/replicas will freeze when VM level backup happens & nodes will lose connection due to idleness/no response.
+
 
 
 

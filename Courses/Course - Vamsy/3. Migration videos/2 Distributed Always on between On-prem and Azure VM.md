@@ -1,4 +1,4 @@
-<img width="380" height="583" alt="image" src="https://github.com/user-attachments/assets/758c62b4-0d44-4843-98fa-31069696bffb" /># Distributed Always on Availability Group (DAG) between On-prem and Azure VM
+# Distributed Always on Availability Group (DAG) between On-prem and Azure VM
 
 # Video link: 
 - https://drive.google.com/file/d/1UmOp3dAO8iR20HZpUlkN3eMMCOJilrV7/view?usp=drive_link

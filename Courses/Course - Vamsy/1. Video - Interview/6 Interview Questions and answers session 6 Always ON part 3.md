@@ -10,6 +10,7 @@ References:
 - https://sqlserverentire.blogspot.com/2018/11/backups-through-maintenance-plans-when.html
 
 
+
 Video Timeline
 -------------
     0:00 - 1:15 // Basic details
@@ -55,19 +56,24 @@ Video Timeline
 
 **13:13 - 21:50 // how does statistics work on secondary replicas?
 Can we create statistics on secondary replicas?**
-------------------------------------------------------------
+
 - when we create an index on primary, the same get moved to secondary replicas. 
 - In general, we cannot create statistics on secondary.
 - for select queries with predicates, SQL Server will create column level statistics.
 - if you turn on read workloads on secondary,it will create column level statistics inside the tempdb.
 
+
+
 ![IgnoreReplica](https://drive.google.com/drive/u/0/folders/1t9ifdKo1n6qsYBY63Jj8z3dlLvIxGVlG)
 
 
-
-
-
-
+### what happens when multi-subnet = true?
+https://www.mssqltips.com/sqlservertip/3422/how-to-resolve-connectivity-issues-with-sql-server-availability-groups/
+- there are chances for time-outs.
+- the 2 IP addresses are located in the DNS server.
+- DNS does not know which IP to connect to.
+- by enabling to true, App will connect to IP addresses in DNS in parallel instead of serial which will let app know which is online IP & offline
+  
 
 
 

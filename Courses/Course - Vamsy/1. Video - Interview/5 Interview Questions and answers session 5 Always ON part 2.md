@@ -60,6 +60,41 @@ Couple of reasons why it could happen
 - VMware snapshots: causes the servers/nodes/replicas will freeze when VM level backup happens & nodes will lose connection due to idleness/no response.
 
 
+**46:33 - 52:30 // while performing DR Drill for TB size database with less time and you thought backups(copy-only full backups) are happening on secondary replicas. You are asked to restore database backups very quickly.
+What kind of backups do you consider?**
+
+- On secondary replicas, we cant take differential backup since only copy-only backups are happening.
+- We CANNOT go with normal backups as it will take a lot of time.
+- We cannot go with copy-only full backup at secondary + Differential backup at primary. It will throw an error.
+- We need to go with LOG BACKUPS on primary.
+
+52:31 - 54:50 // ola hallengren backup scripts for AG to happen only on secondary. Should there be some tweaks for the automated backups to happen for ola scripts?
+
+- We need to add COPY-ONLY to the script for modifying the backup preferences.
+- As you know the backups would run based on backup preferences . Below is the script of Ola's which needs to be configured if you want to offload your backups. We will talk about the highlighted portion in detail down the line.
+
+```EXECUTE [dbo].[DatabaseBackup]
+@Databases = 'USER_DATABASES',
+@Directory = N'|\XXXXXXX\SQLBACKUP',
+@BackupType = 'FULL',
+@copyonly='Y'
+```
+If we DON'T apply @copyonly='Y' Then backups happen on primary & secondary replicas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

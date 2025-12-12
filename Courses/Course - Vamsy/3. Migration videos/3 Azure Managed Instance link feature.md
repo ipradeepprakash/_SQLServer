@@ -13,7 +13,16 @@ In the youtube video, Vamsy has installed SQL 2019 on Azure VM & SQL instance on
 - DOWNTIME in less than a few seconds.
 - Leverage READ-ONLY workloads to Azure MI instance.
 
+### Steps demonstrated in video
+------------------------------
+- Created a test DB on Azure VM instance and took a fresh FULL Backup.
+- Right click of TEST db and chose ‘Azure SQL Managed instance Link’ (this feature helps to configure DAG from On-Prem / Azure VM to Azure MI Instance)
+- ![1.1 Azure MI link in SSMS] (https://drive.google.com/file/d/1jQcFBr1KAs82WK9e0X0XmOBqOb5chTLk/view?usp=drive_link)
+- ![1.2 Select ‘Replicate Database’ as shown](https://drive.google.com/file/d/1cCEBOcBdO3ZE64cneHeI0Cpxi-9SFjYD/view?usp=drive_link)
+- 1.21 Press ‘Next’ ![](https://drive.google.com/file/d/1tkjBJkNfgGk-l8RUA9aClob7Mcy_fZYN/view?usp=drive_link)
 - 
+  
+
 
 
 

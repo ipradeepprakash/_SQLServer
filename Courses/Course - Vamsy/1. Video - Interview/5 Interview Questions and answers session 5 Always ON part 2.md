@@ -31,7 +31,33 @@
     - Ask questions like - are the database under AG or DAG?
     - For DAG, databases in secondary appears as primary(known as FORWARDER i.e the replicas in secondary will be seen as PRIMARY, so diff backups cannot be taken)
 
+**14:49 - 21:36 // what are the differences between AG & DAG**
 
+1. Resources 
+    - in AG, Resources are maintained in windows clustered level, 
+    - in DAG, resources are maintained at SQL server level.
+2. Clusters
+    - AG has same failover clusters
+    - DAG has 2 different clusters.
+3. Log records,
+    - In AG, Primary has to send log records to secondary replicas in the same region.
+    - In DAG, Secondary replicas in Different clusters appear as primary/FORWARDER. The primary in primary location will send log records to all replicas in its primary region & then to only FORWARDER in different cluster in another region, it will not send log records to other secondary replicas in different cluster in another region.
+    - Listener
+        - AG has same Listener
+        - DAG will have different listeners for each cluster.
+        - So any issues in one cluster, app team should have a different connection string for the app connection.
+
+    - SQL versions
+        - AG requires same SQL server versions
+        - DAG can have different compatible versions in different clusters across regions.
+
+
+33:20 - 45:53 // time-out error between primary & secondary replicas, how to troubleshoot?
+—-------------------------------------------------------------------
+Couple of reasons why it could happen
+Network issues between primary & secondary replicas.
+Any changes in firewall rules.
+VMware snapshots: causes the servers/nodes/replicas will freeze when VM level backup happens & nodes will lose connection due to idleness/no response.
 
 
 

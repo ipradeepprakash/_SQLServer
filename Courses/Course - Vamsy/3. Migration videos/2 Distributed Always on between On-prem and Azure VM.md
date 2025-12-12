@@ -1,4 +1,4 @@
-# Distributed Always on Availability Group (DAG) between On-prem and Azure VM
+<img width="380" height="583" alt="image" src="https://github.com/user-attachments/assets/758c62b4-0d44-4843-98fa-31069696bffb" /># Distributed Always on Availability Group (DAG) between On-prem and Azure VM
 
 # Video link: 
 - https://drive.google.com/file/d/1UmOp3dAO8iR20HZpUlkN3eMMCOJilrV7/view?usp=drive_link
@@ -117,39 +117,43 @@ select * from sys.availability_group_listeners
 sp_readerrorlog
 drop availability group [distributedag] ```
 
+- 3.33 On secondary i.e. Azure VM, replace CREATE with ALTER
+``` ALTER AVAILABILITY GROUP [distributedag]
+JOIN
+AVAILABILITY GROUP ON
 
+'AGONPREM' WITH
+{
 
+LTSTENER_URL - 'tcp://192.168.0.78:5022',
+AWAILABILITY_MODE - ASYNCHRONOUS_COMNIT,
+FAILOVER_NODE - MANUAL,
+SEEDING_MODE - AUTOMATIC
+},
 
+'AGAZURE' WITH
+{
+LISTENER_URL - 'tcp://10.10.10.57:5022",
+AWAILABILITY_MODE - ASYNCHRONOUS_COMNIT,
+FAILOVER_MODE - MANJAL
+SEEDING_MODE - AUTOMATIC
+};
 
+GO
 
+3.34 Refresh the SSMS for both instances & check the DAG for both sites ![3.34 Refresh & check DAG for both sites](https://drive.google.com/file/d/1aGQs1GfNXQwAHp-PbiezJ0biOrJADrDF/view?usp=drive_link)
+----------------------------
+- For migration of TB Size databases, DO NOT go with the Auto-Seeding option as it will have an impact on performance. So take backup & restore with NO RECOVERY on Secondary & during Cut-Over just do JOIN ONLY Database option.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+For SQL server with different versions, DAG Failover to Azure & Making Database as primary is possible & Failback is Not available because we CANNOT DO the Always ON for different SQL versions.
+For SQL server with Same Versions, DAG, we can do Fail back.
+DAG terminologies
+—------------------------
+Global Primary: Primary site
+Global Forwarder: Secondary replica
+DAG does not support AUTOMATIC Failover.
+Steps to failover in DAG
+—-------------------------------
 
 
 

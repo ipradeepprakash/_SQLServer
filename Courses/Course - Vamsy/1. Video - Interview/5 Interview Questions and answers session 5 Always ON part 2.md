@@ -73,12 +73,13 @@ What kind of backups do you consider?**
 - We need to add COPY-ONLY to the script for modifying the backup preferences.
 - As you know the backups would run based on backup preferences . Below is the script of Ola's which needs to be configured if you want to offload your backups. We will talk about the highlighted portion in detail down the line.
 
-        ```EXECUTE [dbo].[DatabaseBackup]
+```EXECUTE [dbo].[DatabaseBackup]
         @Databases = 'USER_DATABASES',
         @Directory = N'|\XXXXXXX\SQLBACKUP',
         @BackupType = 'FULL',
         @copyonly='Y'
-        ```
+```
+        
 If we DON'T apply @copyonly='Y' Then backups happen on primary & secondary replicas.
 
 

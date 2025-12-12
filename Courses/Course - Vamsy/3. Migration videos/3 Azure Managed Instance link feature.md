@@ -71,13 +71,152 @@ Failback from Azure MI instance to Azure VM / On-Prem only possible if SQL versi
        - Check the below screenshot for CU that needs to be installed before implementing the Managed instance link feature.
     ![1.1 CU For MI instance link feature](https://drive.google.com/file/d/1wJ_ucVwgGcN9JiLzmCimyajR1q7avR2V/view?usp=drive_link)
 
+4. Disk types for Azure MI: Premium SSD
+
+### Steps 
+---
+1. Create database master key on Source (IaaS)
+2. Check if always on availability option is enabled using script
+    a. -- Run on SQL Server
+    b. -- Is the availability groups feature enabled on this SQL Server
+
+``` DECLARE @IsHadrEnabled sql_variant = (select SERVERPROPERTY('IsHadrEnabled'))
+SELECT
+    @IsHadrEnabled as 'Is HADR enabled',
+    CASE @IsHadrEnabled
+        WHEN 0 THEN 'Availability groups DISABLED.'
+        WHEN 1 THEN 'Availability groups ENABLED.'
+        ELSE 'Unknown status.'
+    END
+    as 'HADR status'
+```
+
+3. Now i have to configure some connectivity to talk to Azure Managed instance.
+
+    3.1) if you are coming outside of Azure cloud, ensure either of below connection
+    - site-to-site VPN Connection.
+    - Azure ExpressRoute connection
+
+    3.2) if you are coming within Azure cloud & within Same Vnet, you DO NOT need anything 
+    3.3) if you are coming within the Azure cloud & outside of a different Vnet, you need Virtual Network Peering.
+
+4. The Network Security Group (NSG) rules on the subnet hosting managed instance needs to allow:
+    - Inbound traffic on port 5022 and port range 11000-11999 from the network hosting SQL Server
+
+5. Firewall on the network hosting SQL Server, and the host OS needs-to allow:
+    - Inbound traffic on port 5022 from the entire subnet range hosting SQL Managed Instance
+
+6. Test the connection from Source (Iaas) to Azure MI via powershell command
+    - Tnc <Azure MI instance> port 5022
+7. We cant test the connectivity from Azure MI to source (Iaas/On-Prem), so 
+    - Create a test endpoint
+    - Use SQL agent with Powershell TNC command to ping Source server.
+    - For creating endpoint, we need authentication, for that Auth -> we need certificate -> for certificate, we need DMK(database master Key).
+        -- run on SQL Server
+        -- Create the certificate meeded for the test endpoint
+    ```
+            USE MASTER
+            CREATE CERTIFICATE TEST_CERT
+            WITH SUBJECT = N'Certificate for SQL Server', EXPIRY_DATE = N'3/30/2051'
+            Go
+
+            -- Create the test endpoint om SQL Server
+                USE MASTER
+                CREATE ENDPOINT TEST_ENDPOINT
+                STATE=STARTED
+                AS TCP (LISTENER_PORT=5022, LISTENER_IP = ALL)
+                FOR DATABASE_MIRRORING (
+                ROLE=ALL,
+                AUTHENTICATION = CERTIFICATE TEST_CERT,
+                ENCRYPTION = REQUIRED ALGORITHM AES	
+                )
+
+    ```
+8. Now, create a SQL agent on SQL Managed instance (MI) with below script (check syntax and Iaas IP Address)
+```
+-- Run on managed instance
+-- SQL_SERVER_IP_ADDRESS should be an IP address that could be accessed from the SQL Managed Instance host mac
+DECLARE @SQLServerIpAddress NVARCHAR(MAX) = "<SQL_SERVER_IP_ADDRESS>" -- insert your SQL Server IP address in
+DECLARE @tncCommand NVARCHAR(MAX) = 'tnc ' + @SQLServerIpAddress + ' -port 5022 -InformationLevel Quiet'
+DECLARE @jobId BINARY(16)
+
+IF EXISTS(select * from msdb.dbo.sysjobs where name = 'NetHelper') THROW 70000, 'Agent job NetHelper already',1
+
+-- To delete NetHelper job run: EXEC msdb.dbo.sp_delete_job @job_name=N'NetHelper'
+
+EXEC msdb.dbo.sp_add_job @job_name=N'NetHelper',
+@enabled=1,
+@description=N'Test Managed Instance to SQL Server network connectivity on port 5022.',
+@category_name=N'[Uncategorized (Local)]',
+@owner_login_name=N'cloudSA', @job_id = @jobId OUTPUT
+
+EXEC msdb.dbo.sp_add_jobstep @job_id-@jobId, @step_name=N'TNC network probe from MI to SQL Server',
+@step_id=1,
+@os_run_priority=@, @subsystem=N'PowerShell',
+@command - @tncCommand,
+@database_name=N'master',
+@flags=40
+
+EXEC msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
+
+EXEC msdb.dbo.sp_add_jobserver @job_id = @jobId, @server_name = N'(local)'
+```
+
+- Next, Create stored procedure on Azure MI to fetch the above job result details.
+```
+IF EXISTS(SELECT * FROM sys.objects WHERE name = 'ExecuteletHeIper')
+THROW 70001, 'Stored procedure ExecuteNetHelper already exists. Rename or drop the existing procedure before',1
+GO
+
+CREATE PROCEDURE ExecuteNetHelper AS
+-- To delete the procedure run: DROP PROCEDURE ExecuteNetHelper
+BEGIN
+-- Start the job.
+DECLARE @NetHelperstartTimeUtc datetime = getutcdate()
+DECLARE @stop_exec_date datetime = null
+EXEC msdb.dbo.sp_start_job @job_name = N'NetHelper'
+
+-- Wait for job to complete and then see the outcome.
+WHILE (@stop_exec_date is null)
+BEGIN
+
+-- Wait and see if the job has completed.
+WAITFOR DELAY '00:00:01'
+SELECT @stop_exec_date = sja.stop_execution_date
+FROM msdb.dbo.sysjobs sj JOIN msdb.dbo.sysjobactivity sja ON sj.job_id = sja.job_id
+WHERE sj.name = 'NetHelper'
+
+-- If job has completed, get the outcome of the network test.
+IF (@stop_exec_date is not null)
+BEGIN
+SELECT 
+sj.name JobName, sjsl.date_modified as 'Date executed', sjs.step_name as 'Step executed", sjsl.log as'
+FROM
+msdb.dbo.sysjobs sj
+LEFT OUTER JOIN msdb.dbo.sysjobsteps sjs ON sj.job_id = sjs.job_id
+LEFT OUTER JOIN msdb.dbo.sysjobstepslogs sjsl ON sjs.step_uid = sjsl.step_uid
+WHERE
+sj.name = 'NetHelper'
+
+END
+
+-- In case of operation timeout (90 seconds), print timeout message.
+IF (datediff(second, @NetHelperstartTimeUtc,getutcdate()) > 90)
+BEGIN
+SELECT 'NetHelper timed out during the network check. Please investigate SQL Agent logs for more in format:'
+BREAK;
+END
+END
+END
 
 
+```
 
-
-
-
-
+- Run the stored procedure on Azure MI : EXEC ExecuteNetHelper
+- Figure1 exec ExecuteNetHelper (https://drive.google.com/file/d/1yfRXzIpHa-SHvYWajNBb8MDijQUzCh2f/view?usp=drive_link)
+- Now, on Source (Iaas), select the DB -> right click & select ‘Azure SQL managed Instance Link’ (https://drive.google.com/file/d/1uyIRhln-GR3497P8Zs_m8ruKuvOMr0_U/view?usp=drive_link)
+- Now, check connect of port 5022 in Iaas & should show success (check after endpoint is created)
+    - Tnc localhost -port 5022 
 
 
 

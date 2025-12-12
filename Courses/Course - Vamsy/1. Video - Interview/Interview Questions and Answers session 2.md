@@ -34,3 +34,15 @@ Ref: https://youtu.be/hn_l1PRGRd0
     Locks (LCK_M) will be held for the majority of the time during rebuild.
 #### Does Reorg index cause blockings?
     No (but will cause blocking for short time with Intent-exclusive table lock)
+
+
+## 14:18 - 17:35//  can we stop/kill Jobs of Index Reorg & Index rebuild? What will be the impact?
+If there are 30 tables in DB, index rebuild has done 25 tables rebuild, if we stop the job & start the job, will it start from 1st table or start at 26th table?
+
+**Index Reorg** : 
+- Can be interrupted and can start from where it stopped.
+
+
+Index rebuild cannot be interrupted as restart will again start rebuilding from 1st table.
+From SQL 2017, there is Resume-online index rebuild feature.
+Until SQL 2016 versions, all rebuild index operations cannot be interrupted. It is wither full task completion or rollback to the beginning.

@@ -1,0 +1,36 @@
+# Interview Questions and Answers session 2
+Ref: https://youtu.be/hn_l1PRGRd0
+
+
+
+### Video timeline: 
+
+
+##### 0:00 - 4:00 // introduction on type of questions
+##### 4:01 - 6:49 // index rebuild or Reorg
+##### 6:50 - 14:17 // Will rebuilding index cause blockings?
+##### 14:18 - 17:35 //  can we stop/kill Index rebuild? What will be the impact?
+##### 17:38 - 24:42 // is it possible to track the progress of index Rebuild & Index reorg?
+##### 24:44 - 25:04 // how many types of statistics are there?
+##### 25:05 - 36:19 // Will index rebuild update statistics?
+##### 36:21 - 41:39 // if there is 800 GB table size, what should be the strategy of maintenance for indexing, stats etc?
+##### 43:51 - 48:17 // how to determine the downtime required for rebuilding indexes for huge database tables?
+##### 48:23 - 45:13 // what is your approach, if there is a performance issue/slowness?
+##### 45:15 - 55:26 // what is difference between Blockings & deadlocks?
+##### 56:21 - 1:03:06 // Find the query running for a long time?
+
+## 4:01 - 6:49 // index rebuild or Reorg
+    If frag < 30%, we will go for Reorg the indexes
+    If Frag > 30%, we will go for Rebuild the indexes
+
+## 6:50 - 14:17// does rebuild index cause blockings?
+### Online rebuild
+
+    Yes, only during the final phase of index rebuild.
+    Online rebuild index will hold locks(schema-Modification LCK_M) at the last stages (initial stage,intermediate stage & final stage)
+    Once the rebuild reaches the last stage, nobody can access the object/table that is being rebuild on index.
+
+### Offline Rebuild
+    Locks (LCK_M) will be held for the majority of the time during rebuild.
+#### Does Reorg index cause blockings?
+    No (but will cause blocking for short time with Intent-exclusive table lock)

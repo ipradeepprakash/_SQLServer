@@ -25,11 +25,12 @@
 2. Can we take differential backups on replicas?
     - Answer: No
 3. On the primary server, Diff backups are NOT Able to take. Why?
-    - Answer: could be because
-    - If backups preference is given ‘SECONDARY ONLY’.
-    - Ask what is the error msg to interviewers.
-    - Ask questions like - are the database under AG or DAG?
-    - For DAG, databases in secondary appears as primary(known as FORWARDER i.e the replicas in secondary will be seen as PRIMARY, so diff backups cannot be taken)
+    - Answer:
+    - could be because
+        - If backups preference is given ‘SECONDARY ONLY’.
+        - Ask what is the error msg to interviewers.
+        - Ask questions like - are the database under AG or DAG?
+        - For DAG, databases in secondary appears as primary(known as FORWARDER i.e the replicas in secondary will be seen as PRIMARY, so diff backups cannot be taken)
 
 **14:49 - 21:36 // what are the differences between AG & DAG**
 

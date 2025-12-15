@@ -39,7 +39,7 @@ Reference:
 
     ##### 4.1. Above 3 scenarios can be achieved in 2 ways 
     - Take .bak to azure storage and restore to VM.
-                Backup the .bak files to URL (storage account).
+    - Backup the .bak files to URL (storage account).
         
     ##### 4.2. For SQL 2008
     - backups cannot be done to storage account or URL. only way is take backup & copy to azure storage.

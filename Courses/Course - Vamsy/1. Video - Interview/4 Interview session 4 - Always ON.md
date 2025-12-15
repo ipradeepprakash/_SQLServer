@@ -118,7 +118,7 @@ Microsoft realized the challenges in above Features & came up with Always On wit
 - **Jobs**: Make sure no scheduled jobs are executed during patching duration.
 - If servers are NOT PHYSICAL, then windows team can take SNAPSHOT of the entire server.
 
-**54:37 - 1:06:25 // 54:37: failover readiness value**
+**54:37 - 1:06:25 // failover readiness value**
 - In the AG dashboard, if the failover readiness = NO DATA LOSS
 - LAST HARDENED LSN: it will be in SYNC if both PRIMARY / SECONDARY are in the same state.
 - Replication: The trace flag to sync in replication in an Availability Group (AG) is trace flag 1448, which allows the log reader to replicate transactions that have been hardened on synchronous replicas,

@@ -17,7 +17,6 @@ Video timeline:
 
 #### 4:22 - // Difference between Azure, AWS
 -------------------------------------------------
-
     AWS EC2: Azure VM’s
     AWS RDS: Mixture of Azure MI & Azure SQL
 
@@ -28,7 +27,7 @@ Video timeline:
 - Basically 3 categories
   - Iaas (Azure VM)
   - Pa  s (Azure MI & Azure SQL)
-  -   aas (No service here as of now for DBA)
+  -   Iaas (No service here as of now for DBA)
 -   aas: (Azure VM) Instance as a service
 - Pass: (Azure MI & Azure SQL)Database as service.
 

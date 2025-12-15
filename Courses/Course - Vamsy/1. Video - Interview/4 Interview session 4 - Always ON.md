@@ -30,14 +30,14 @@ copy-dbalogin:
 - to copy logins between primary & secondary servers in Alwas On AG
         https://drive.google.com/file/d/150ne59D8SLRu5cGHmK6sZ9Tuv4Yc2OC2/view?usp=drive_link
 
-- Copy-dbajob: 
+- **Copy-dbajob: **
     - to copy jobs between primary & secondary servers in Always On AG
 
 - Jobs_creation_alwayson : 
     - A Customised script, if job is on PRIMARY SERVER, IT WILL EXECUTE, ELSE NO.
         https://drive.google.com/file/d/1Q5UvAqnHT4aMNTHgzmBWf_pim3xZkxik/view?usp=drive_link
 
-- Sync-Dbaavailabilitygroup : 
+- **Sync-Dbaavailabilitygroup :**
     
         Sync all db settings related to
 
@@ -46,8 +46,6 @@ copy-dbalogin:
         - MAXDOP, DBMail,
         - sp_configure
         
-
-
 **Before considering Always On, we need to ask few questions to all stake holders:**
 - Does our application really need HA or DR? 
 - If it is DR, it's in a different Sub-net.
@@ -101,7 +99,7 @@ Microsoft realized the challenges in above Features & came up with Always On wit
     - There is a function that can check if a replica is PRIMARY OR NOT. i.e it should be added to every required job, it can be automated via small job step creation (https://drive.google.com/file/d/1Q5UvAqnHT4aMNTHgzmBWf_pim3xZkxik/view?usp=drive_link
     )
 
-    - Sync-Dbaavailabilitygroup : used to sync all PRIMARY SERVER db settings related to SECONDARY db server (run this script in job & schedule).
+    - **Sync-Dbaavailabilitygroup** : used to sync all PRIMARY SERVER db settings related to SECONDARY db server (run this script in job & schedule).
         - linked servers
         - credentials
         - MAXDOP etc

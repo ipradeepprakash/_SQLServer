@@ -112,12 +112,11 @@ Microsoft realized the challenges in above Features & came up with Always On wit
 
 **50:20 - 54:03 // How do you patch the replicas & primary servers?**
 
-- While doing a failover, we have to change to SYNC mode.
-- Failover mode should be MANUAL.
+- change the Failover mode should be MANUAL between replicas.
 - Once patching is done on SECONDARY, wait for Data sync, only then failover to another instance.
 - Use GUI for Failover as it checks various parameters in the background.
-- Jobs: Make sure no scheduled jobs are executed during patching duration.
-- If our servers are NOT PHYSICAL, the windows team can take SNAPSHOT of the entire server.
+- **Jobs**: Make sure no scheduled jobs are executed during patching duration.
+- If servers are NOT PHYSICAL, then windows team can take SNAPSHOT of the entire server.
 
 **54:37 - 1:06:25 // 54:37: failover readiness value**
 - In the AG dashboard, if the failover readiness = NO DATA LOSS

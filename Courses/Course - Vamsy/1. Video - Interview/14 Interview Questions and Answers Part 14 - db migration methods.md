@@ -51,7 +51,8 @@ below approach works Only ENTERPRISE Version, not for Dev / Standard versions
 		- we can use Rolling upgrade technique: works only for operating system   .
         version is (N-1) rule at the destination server.
         
-        (if source OS = windows 2016 & destination OS = windows 222, it will not work, as previous version of windows 2022 is windows 2019, so windows 2016 is not compatible for rolling upgrade technique.)
+        (if source OS = windows 2016 & destination OS = windows 222, it will not 
+            work, as previous version of windows 2022 is windows 2019, so windows 2016 is not compatible for rolling upgrade technique.)
 
         For example:
 

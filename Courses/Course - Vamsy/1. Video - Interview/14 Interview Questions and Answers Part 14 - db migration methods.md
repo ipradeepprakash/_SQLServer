@@ -7,11 +7,11 @@ Remember:
 
 Requirement :
 
-    When it comes to DB migration, we need to focus on the target.
-    If target is IaaS & source is on-prem: there is OS (operating system) 
+    - When it comes to DB migration, we need to focus on the target.
+    - If target is IaaS & source is on-prem: there is OS (operating system) 
     What are all the options?
-    If the source versions are 2008 / 2012
-    And destination version is SQL 2022
+    If the source versions = 2008 / 2012
+    And destination version = SQL 2022
 
 Approach:
 ---------------

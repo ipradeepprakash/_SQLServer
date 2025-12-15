@@ -26,9 +26,9 @@ Video timeline:
 - AWS RDS is a mixture of Azure MI & Azure SQL.
 - Basically 3 categories
   - Iaas (Azure VM)
-  - Pa  s (Azure MI & Azure SQL)
+  - Paas (Azure MI & Azure SQL)
   -   Iaas (No service here as of now for DBA)
--   aas: (Azure VM) Instance as a service
+-   Iaas: (Azure VM) Instance as a service
 - Pass: (Azure MI & Azure SQL)Database as service.
 
 #### When should I choose Azure VM?

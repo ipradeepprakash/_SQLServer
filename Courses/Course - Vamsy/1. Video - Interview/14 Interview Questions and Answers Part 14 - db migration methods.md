@@ -118,7 +118,7 @@ Destination
       - On source (on-premises) there will be support for MAC Address, 
         broadcasting protocol is supported, so that is the reason DNN is supported 
         on on-premises.
-      - Once DB server moved to Azure VM, Azure does NOT support broadcasting 
+      - Once DB server moved to Azure VM, Azure does NOT support broadcasting     
         protocols, so either DNN or VNN should be used.
       - If app team requires any help for port numbers for only 1433 & app string 
         not willing to user listener with port number then they have to use Load 

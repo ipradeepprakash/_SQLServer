@@ -48,14 +48,20 @@ below approach works Only ENTERPRISE Version, not for Dev / Standard versions
         (before SQL 2017, we did not have DAG for clusterless AG. i.e. SQL 2016 had DAG but not clusterless)
 3) if source = SQL 2017 & has Always On configured already, Target = SQL 2022.
 
-		- we can use Rolling upgrade technique: works only for operating system version is (N-1) rule at the destination server.(if source OS = windows 2016 & destination OS = windows 222, it will not work, as previous version of windows 2022 is windows 2019, so windows 2016 is not compatible for rolling upgrade technique.)
+		- we can use Rolling upgrade technique: works only for operating system version is (N-1) rule at the destination server.
+        
+        (if source OS = windows 2016 & destination OS = windows 222, it will not work, as previous version of windows 2022 is windows 2019, so windows 2016 is not compatible for rolling upgrade technique.)
 
         For example:
 
         if Node1 , Node2 are part of Source (Cluster_name = cluster_2017, Listener_name = Listener_2017) with OS = windows 2017
 
         if Node3, Node4 are part of Destination/Target with OS = windows 2019
-        During Rolling Upgrade process, destination Node3,Node4 will be part of source cluster cluster_2017 (infra team or DBA team can do this step, i.e install failover service and add node3, node4 to the existing source cluster.(Node1,Node2,Node3,Node4))
+
+        During Rolling Upgrade process, destination Node3,Node4 will be part of source cluster cluster_2017 (infra team or DBA team can do this step, 
+        
+        i.e install failover service and add node3, node4 to the existing source cluster.(Node1,Node2,Node3,Node4))
+        
                 - during this phase, cluster validation reports should NOT be executed.
                 - Now, add Node3, Node 4 to the existing database AG setup.
                 - now, 3 secondary replicas will be there at Source (Node2,Node3,Node4)

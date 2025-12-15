@@ -1,6 +1,7 @@
 Interview Questions: Trace Flags 
 -----------------------------------------------------
 1) what is trace flag 12310 used for in AG?
+-  to increase the message limits for the flow control gates. 
 
 2) what are trace flags used for Deadlock 
 Answer : 1222, 1204

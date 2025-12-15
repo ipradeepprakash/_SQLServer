@@ -72,7 +72,8 @@ Reference:
 1. If size >> 16 TB, cant go with Azure MI instance.(for Business Critical)
 2. If size <= 4 TB, only in the General category.
 
-### Are SQL agent jobs required? DB Mail, support for cross db queries, linked servers, windows auth (all these are possible in MI instance, not Azure SQL)
+### Are SQL agent jobs required? 
+- DB Mail, support for cross db queries, linked servers, windows auth (all these are possible in MI instance, not Azure SQL)
 
 ### Native Backups restore from .bak files
 - Because Azure SQL does not support .bak restore, but MI instance does.

@@ -40,10 +40,11 @@ below approach works Only ENTERPRISE Version, not for Dev / Standard versions
             2) NoRecovery Mode (Yes, Possible)
 2) if source = SQL 2017 & above with stand-alone server
 
-	  - instead of traditional answers like Backup/Restores, Logshipping, there are advanced 
-     technologies that can be implemented.
-	  - if my source = SQL 2017, how to move it to SQL 2022 with very min downtime(< 1 
-     min), also this is a stand-alone server.
+	  - instead of traditional answers like Backup/Restores, Logshipping, there are 
+        advanced technologies that can be implemented.
+	  - if my source = SQL 2017, how to move it to SQL 2022 with very min downtime
+    
+      (< 1 min), also this is a stand-alone server.
 		>> we can use DAG (Distributed availability Groups) with no cluster, no Always on config required. once DAG is done on both sides, we need to failover the databases during downtime.
         (before SQL 2017, we did not have DAG for clusterless AG. i.e. SQL 2016 had DAG but not clusterless)
 3) if source = SQL 2017 & has Always On configured already, Target = SQL 2022.

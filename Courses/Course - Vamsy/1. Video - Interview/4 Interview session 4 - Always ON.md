@@ -92,12 +92,12 @@ Microsoft realized the challenges in above Features & came up with Always On wit
 
     **Scenario1: Changes on primary, but not done on secondary.** 
 
-    - On the primary server, app team asks to change the schedule of the job. DBA will change the schedule as per request. Now, imagine if the same job on secondary is not changed & after failover, the same job on the new server will run at old time which causes issues. (use copy-dbajob -force)
+    - On the primary server, app team asks to change the schedule of the job. DBA will change the schedule as per request. Now, imagine if the same job on secondary is not changed & after failover,
+      the same job on the new server will run at old time which causes issues. (use **copy-dbajob -force**)
     - Imagine if DB settings like MAXDOP are changed on PRIMARY and the same was not done on SECONDARY. After a failover to the new primary server, there could be performance issues.
     - How will you check for jobs that should run only on PRIMARY,not SECONDARY? I.e a job that has DML tasks & Select table records, if for some reason it gets activated on secondary. The job fails on secondary 
-
-    - There is a function that can check if a replica is PRIMARY OR NOT. i.e it should be added to every required job, it can be automated via small job step creation (https://drive.google.com/file/d/1Q5UvAqnHT4aMNTHgzmBWf_pim3xZkxik/view?usp=drive_link
-    )
+    - There is a function that can check if a replica is PRIMARY OR NOT. i.e it should be added to every required job, it can be automated via small job step creation
+    - (https://drive.google.com/file/d/1Q5UvAqnHT4aMNTHgzmBWf_pim3xZkxik/view?usp=drive_link)
 
     - **Sync-Dbaavailabilitygroup** : used to sync all PRIMARY SERVER db settings related to SECONDARY db server (run this script in job & schedule).
         - linked servers
@@ -122,7 +122,8 @@ Microsoft realized the challenges in above Features & came up with Always On wit
 **54:37 - 1:06:25 // 54:37: failover readiness value**
 - In the AG dashboard, if the failover readiness = NO DATA LOSS
 - LAST HARDENED LSN: it will be in SYNC if both PRIMARY / SECONDARY are in the same state.
-- Replication: The trace flag to sync in replication in an Availability Group (AG) is trace flag 1448, which allows the log reader to replicate transactions that have been hardened on synchronous replicas, not necessarily all synchronous replicas. This can speed up replication, but introduces the risk of data loss if a failover occurs to an asynchronous replica.
+- Replication: The trace flag to sync in replication in an Availability Group (AG) is trace flag 1448, which allows the log reader to replicate transactions that have been hardened on synchronous replicas,
+  not necessarily all synchronous replicas. This can speed up replication, but introduces the risk of data loss if a failover occurs to an asynchronous replica.
 
 **57:08 - // what happens if the log file gets full and is on always on and if shrinking is not happening on primary, how to check?**
 - Take log backup & shrink, if it allows. 

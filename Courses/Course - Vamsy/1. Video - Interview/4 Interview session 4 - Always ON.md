@@ -71,7 +71,8 @@ Microsoft realized the challenges in above Features & came up with Always On wit
 
 - Certain permissions needed on AD level.
 - When creating LISTENER, we get the below issue
-    - “Listener cannot be brought online as its in OFFLINE state” and the listener cannot be made online, it fails, because we need to do pre-staging 
+    - “Listener cannot be brought online as its in OFFLINE state” and the listener cannot be made online,
+        - it fails, because we need to do pre-staging 
     - (certain permissions needed at AD Level for cluster service account i.e )
         1) Create Computer object
         2) Read all Properties

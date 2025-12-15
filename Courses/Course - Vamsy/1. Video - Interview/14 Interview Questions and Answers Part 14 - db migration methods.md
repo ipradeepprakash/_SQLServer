@@ -96,22 +96,28 @@ Destination
 		- Difference here is, Unlike in usual rolling upgrade with Always on AG, we add new nodes to existing Source cluster & migrate. But in Rolling upgrade with DAG, we will create a new cluster in destination server & perform migration.
 
 
-**Lift & shift method**
+    **Lift & shift method**
 
-- When db servers are involved, DBA have very few tasks.
-- This method can be used to move DB servers with
-	- Stand-alone
-	- Always on
-- DBA steps are
-	- Stop the SQL services during downtime.
-	- If the environment is clusters, make sure cluster service is running fine.
-	- In new clusters (destination), IP of DB Server nodes will change.
-	- Configure new IP
-	- Start SQL services
-	- Ensure binding is there btw new IP & old windows cluster name
-	- On source (on-premises) there will be support for MAC Address, broadcasting protocol is supported, so that is the reason DNN is supported on on-premises.
-	- Once DB server moved to Azure VM, Azure does NOT support broadcasting protocols, so either DNN or VNN should be used.
-	- If app team requires any help for port numbers for only 1433 & app string not willing to user listener with port number then they have to use Load balancer.(because DNN cannot use 1433, but need to use other port)
+    - When db servers are involved, DBA have very few tasks.
+    - This method can be used to move DB servers with
+      - Stand-alone
+      - Always on
+
+    - DBA steps are
+      - Stop the SQL services during downtime.
+      - If the environment is clusters, make sure cluster service is running fine.
+      - In new clusters (destination), IP of DB Server nodes will change.
+      - Configure new IP
+      - Start SQL services
+      - Ensure binding is there btw new IP & old windows cluster name
+      - On source (on-premises) there will be support for MAC Address, 
+        broadcasting protocol is supported, so that is the reason DNN is supported 
+        on on-premises.
+      - Once DB server moved to Azure VM, Azure does NOT support broadcasting 
+        protocols, so either DNN or VNN should be used.
+      - If app team requires any help for port numbers for only 1433 & app string 
+        not willing to user listener with port number then they have to use Load 
+        balancer.(because DNN cannot use 1433, but need to use other port)
 
 
 Summary

@@ -1,4 +1,4 @@
-# Interview Questions and answers session 8
+# Interview Questions and answers session 8 - Azure SQL-AzureMI-Logins
 
 
 Video reference: 

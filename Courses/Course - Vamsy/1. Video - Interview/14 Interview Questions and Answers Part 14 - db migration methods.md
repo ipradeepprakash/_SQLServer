@@ -89,11 +89,16 @@ Destination
 
 **Approach:**
 
-		- No Rolling upgrade option can be used, since OS compatibility issues(N-1 at destination).
+		- No Rolling upgrade option can be used, since OS compatibility issues(N-1 at 
+          destination).
 		- On destination, we will create new cluster with nodes with new listener.
 		- We are doing Rolling upgrade with DAG using source & destination servers.
-		- Once everything is fine, break the set up in Source & establish Destination using failover from source.
-		- Difference here is, Unlike in usual rolling upgrade with Always on AG, we add new nodes to existing Source cluster & migrate. But in Rolling upgrade with DAG, we will create a new cluster in destination server & perform migration.
+		- Once everything is fine, break the set up in Source & establish 
+          Destination using failover from source.
+		- Difference here is, Unlike in usual rolling upgrade with Always on AG, we   
+          add new nodes to existing Source cluster & migrate. But in Rolling upgrade with 
+          DAG, we will create a new cluster in destination server & 
+          perform migration.
 
 
     **Lift & shift method**

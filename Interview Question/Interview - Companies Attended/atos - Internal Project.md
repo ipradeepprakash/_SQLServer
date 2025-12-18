@@ -11,4 +11,6 @@
 
 ## Performance / Query tuning
 - in any practical scenario, what was issue & how did you fix the query performance?
+- any DMV you remembers & for what?
+
 

@@ -43,10 +43,9 @@ in SQL server 2022 version, we see the below msg “Starting up model_replicated
     ```
 - Check Tempdb file usage
 - https://techcommunity.microsoft.com/blog/azuredbsupport/resolve-tempdb-related-errors-in-azure-sql-database/3597944
-    - ``` SELECT [Source] = 'database_files', [TEMPDB_max_size_MB] = SUM(max_size) * 8 / 1027.0, [TEMPDB_current_size_MB] = SUM(size) * 8 / 1027.0, [FileCount] = COUNT(FILE_ID) FROM tempdb.sys.database_files WHERE type = 0 --ROWS ```
+    - SELECT [Source] = 'database_files', [TEMPDB_max_size_MB] = SUM(max_size) * 8 / 1027.0, [TEMPDB_current_size_MB] = SUM(size) * 8 / 1027.0, [FileCount] = COUNT(FILE_ID) FROM tempdb.sys.database_files WHERE type = 0 --ROWS
 
 - Also depends on vCore configuration what we selected.
-
 
 
 

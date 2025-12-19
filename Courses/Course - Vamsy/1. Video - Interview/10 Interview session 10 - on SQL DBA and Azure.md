@@ -21,7 +21,15 @@ SQL agent fails with below error msg
    
 ![SQL Server Restart error](https://itsjusttesting101.blogspot.com/2025/12/sql-server-restarting-error-request.html)
 
+Troubleshooting Steps 
+-------------------
+- Go to error logs & inspect what is there in error logs.
+- TLS in different versions will have different values. Both need to have same common algorithm/values.
+- Engage wintel team if the values in registry needs to be updated.
 
+
+![Registry Edit](https://itsjusttesting101.blogspot.com/2025/12/sql-server-registry-edit.html)
+- A 3rd party tools ![IIS Crypto](https://itsjusttesting101.blogspot.com/2025/12/iis-crypto.html) available to make changes (not suitable for prod tasks, but for learning purpose in local system is fine)
 
 
 

@@ -13,13 +13,11 @@ Video timeline
 
 0:00 - 25:53 // SQL agent unable to start
 --------------------------------------
-SQL agent fails with below error msg
+SQL agent fails with below ![SQL Server Restart error](https://itsjusttesting101.blogspot.com/2025/12/sql-server-restarting-error-request.html)
 
 
         The request failed or the service did not respond in a timely fashion.
         Consult the event log or other applicable error logs for details. 
-   
-![SQL Server Restart error](https://itsjusttesting101.blogspot.com/2025/12/sql-server-restarting-error-request.html)
 
 Troubleshooting Steps 
 -------------------

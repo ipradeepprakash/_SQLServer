@@ -39,13 +39,20 @@ in SQL server 2022 version, we see the below msg “Starting up model_replicated
 - No# of Tempdb files depend on the vCore config we chose for the database.(i.e Basic DTU or vCore Model)
 - In query editor,execute the below query 
     ```SQL
-    Select * from tempdb.sys.database_files
+    Select * from 
+    tempdb.sys.database_files
     ```
 - Check Tempdb file usage
 - https://techcommunity.microsoft.com/blog/azuredbsupport/resolve-tempdb-related-errors-in-azure-sql-database/3597944
 
     ```SQL
-    SELECT [Source] = 'database_files', [TEMPDB_max_size_MB] = SUM(max_size) * 8 / 1027.0, [TEMPDB_current_size_MB] = SUM(size) * 8 / 1027.0, [FileCount] = COUNT(FILE_ID) FROM tempdb.sys.database_files WHERE type = 0 --ROWS```
+    SELECT [Source] = 'database_files', 
+    [TEMPDB_max_size_MB] = SUM(max_size) * 8 / 1027.0, 
+    [TEMPDB_current_size_MB] = SUM(size) * 8 / 1027.0, 
+    [FileCount] = COUNT(FILE_ID) 
+    FROM 
+    tempdb.sys.database_files 
+    WHERE type = 0 --ROWS```
 
 - Also depends on vCore configuration what we selected.
 
@@ -63,9 +70,11 @@ in SQL server 2022 version, we see the below msg “Starting up model_replicated
     (
         what is batch mode - in exec plans
         
-        - From 2012, we have columnstore indexes. We cannot create clustered indexes, so only Non-clustered column store indexes, even then the entire table will become READ-ONLY.
+        - From 2012, we have columnstore indexes. 
+        We cannot create clustered indexes, so only Non-clustered column store indexes, even then the entire table will become READ-ONLY.
         
-        - On the columnstore index,index function is different from traditional indexes. I.e. Traditional indexes will be in B-Tree index format, execution goes Row-by-Row manner from the top level -> Intermediate-Level ->leaf node level.
+        - On the columnstore index,index function is different from traditional indexes. 
+        I.e. Traditional indexes will be in B-Tree index format, execution goes Row-by-Row manner from the top level -> Intermediate-Level ->leaf node level.
         
         - For Columnstore indexes, index architecture is completely different. Here there is a BATCH mode for execution plans.
 

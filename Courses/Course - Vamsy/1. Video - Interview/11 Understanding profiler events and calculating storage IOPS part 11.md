@@ -28,14 +28,33 @@ What are the events that I need to capture in the profiler?
 
 - Under **General**
     
-    Open profiler -> 
-    connect SQL instance->Trace properties -> 
+    Open profiler 
 
-    Trace name(give your preferred name)
+    -> Connect SQL instance
+
+    -> Trace properties 
+
+    -> Trace name (give your preferred name)
 
     -> use the template: select **Blank**
 
 - Under **Event Selection**
+
+    choose - Stored procedure
+        
+        - RPC Completed
+        - SP: StmtCompleted (occurs when a remote procedure call has started)
+        - SP: Completed (a T-SQL statement within a stored procedure has started)
+    
+    choose - TSQL
+        
+        - SQL: BatchCompleted (occurs when a TSQL statement has Completed)
+        - SQL: StmtCompleted (Indicates that the SqlClient, ODBC, OLE DB or DB-Library has unprepared (deleted) a prepared T-SQL statement/s )
+    
+    Choose - **Column filters**
+        - 
+
+
 
 
 

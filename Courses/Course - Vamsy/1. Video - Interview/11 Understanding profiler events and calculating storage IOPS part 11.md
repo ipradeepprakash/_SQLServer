@@ -2,6 +2,11 @@
 
 Video: https://www.youtube.com/watch?v=kuqT_0yDd6o
 
+References: 
+
+How to Use CrystalDiskMark - https://www.youtube.com/watch?v=egQJl80J6VE
+
+
 ### Video Timeline
 --------------
 0:00 - 24:06// set up a TRACE to understand problematic query or stored procedure.
@@ -84,6 +89,16 @@ let's run the below queries & see what is captured in already running profiler
      
 
 ### 24:08 - // Scenario: Migration from On-Prem to Azure VM, we need to calcuate the disk parameters like IOPS,Throughput at On-Prem Level, so that we can match the IOP,throughput on Azure VM. how to calculate?
+
+    - while building a new server, we can use below Tools: 
+        > SQL Stress
+
+        > CyrstalDiskmark
+
+        > SQLIOism
+
+
+
 
 
 

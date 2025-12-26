@@ -5,7 +5,7 @@ Video: https://www.youtube.com/watch?v=kuqT_0yDd6o
 ### Video Timeline
 --------------
 0:00 - 24:06// set up a TRACE to understand problematic query or stored procedure.
-24:08 - // Scenario: Migration from On-Prem to Azure VM, we need to calcuate the disk parameters like IOPS,Throughput at VM Level. how to calculate?
+24:08 - // Scenario: Migration from On-Prem to Azure VM, we need to calcuate the disk parameters like IOPS,Throughput at On-Prem Level, so that we can match the IOP,throughput on Azure VM. how to calculate?
 
 
 ### 0:00 - 24:08// set up a TRACE to understand problematic query or stored procedure.
@@ -83,7 +83,7 @@ let's run the below queries & see what is captured in already running profiler
 
      
 
-### 24:08 - // Scenario: Migration from On-Prem to Azure VM, we need to calcuate the disk parameters like IOPS,Throughput at VM Level. how to calculate?
+### 24:08 - // Scenario: Migration from On-Prem to Azure VM, we need to calcuate the disk parameters like IOPS,Throughput at On-Prem Level, so that we can match the IOP,throughput on Azure VM. how to calculate?
 
 
 

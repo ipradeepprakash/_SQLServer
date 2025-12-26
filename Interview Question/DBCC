@@ -1,6 +1,10 @@
 Interview Questions: DBCC 
 -----------------------------------------------------
 1) when was the last time DBCC CHECKDB happned for specific db? 
-Answer - DBCC DBINFO (<Database_name123>) with tableresults
+    - DBCC DBINFO (<Database_name123>) with tableresults
+
+2) what does SQL DBCC CHECKDB with ESTIMATEONLY will give us?
+    - Tempdb Size
+
 
 

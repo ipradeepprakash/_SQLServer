@@ -6,7 +6,10 @@ References:
 
 > How to Use CrystalDiskMark - https://www.youtube.com/watch?v=egQJl80J6VE
 
-> How to Measure Storage Performance and IOPS on Windows - https://woshub.com/how-to-measure-disk-iops-using-powershell/
+> How to Measure Storage Performance and IOPS on Windows 
+- https://woshub.com/how-to-measure-disk-iops-using-powershell/
+- https://deploymentbunny.com/2014/04/02/powershell-is-kingmeasure-disk-performance-for-iops-and-transfer-rate/
+
 
 
 ### Video Timeline

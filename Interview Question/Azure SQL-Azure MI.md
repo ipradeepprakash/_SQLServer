@@ -24,6 +24,11 @@
 
        > Remotely for General Purpose.
 
+4. what are different ways to connect managed instance?
+   - https://www.youtube.com/watch?v=F-JZmE9pWng
+
+
+
 
 ### Azure SQL
 1. On Azure SQL, how many tempdb files would be created?

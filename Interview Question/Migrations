@@ -39,6 +39,13 @@ Login migration methods
 4) Migration Scenario: A client wants DBA to calculate the IOP on On-Prem server, so that he can replicate the same in Azure VM.
 how to calculate the IOPS, Throughput of the disks on On-prem server?
 
+    - we can use Tool: 
+        > SQL Stress
+
+        > CyrstalDiskhmark
+
+
+
 
 
 

@@ -41,9 +41,9 @@ What are the events that I need to capture in the profiler?
 
 - Under **Event Selection**
 
-    choose - Stored procedure
+    choose - Stored procedure (if Requests are coming from app end)
         
-        - RPC Completed
+        - RPC Completed (Remote procedure call i.e. Java, .Net, Php etc )
         - SP: StmtCompleted (occurs when a remote procedure call has started)
         - SP: Completed (a T-SQL statement within a stored procedure has started)
     
@@ -69,8 +69,22 @@ let's run the below queries & see what is captured in already running profiler
 
     in the above example, we could see that from the profiler trace
 
-    SQL: StmtCompleted - had 2 entries. one for each query
+    SQL: StmtCompleted - had 2 entries, one for each query
     SQL: BatchCompleted - had 1 entry, since 2 queries were executed as a Batch
+
+    so, Batch is similar to Multiple transactions executed at once.
+
+    In real world, if there is an AD-HOC Queries running, we can look at individual statements that is contributing under column SQL: StmtCompleted -> Duration.
+
+    if there is a Requirement to check the list of stored procedures names that gets executed during a day, then
+        - SP:Completed
+
+     
+
+
+
+
+
 
 
 

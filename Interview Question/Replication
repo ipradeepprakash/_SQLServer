@@ -3,3 +3,5 @@
 1) In transactional replication will we get non clustered indexes by default to Subscribers?
     - No, we need to change the replication settings. by default, this setting will be set FALSE.  we need to enable to TRUE.
 
+2) how will you change the password for the distributor admin in replication?
+    - under Replication -> right click "update replication passwords"

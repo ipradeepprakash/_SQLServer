@@ -24,7 +24,7 @@ References:
     0:00 - 24:06 // set up a TRACE to understand problematic query or stored procedure.
 
     24:08 - 1:07:05 // Scenario: Migration from On-Prem to Azure VM, we need to calcuate the disk parameters like IOPS,Throughput at On-Prem Level, so that we can match the IOP,throughput on Azure VM. how to calculate?
-    
+
     1:07:05 - last minute // Scenario: how to configure memory settings for STAND ALONE & CLUSTERED environments?
 
 
@@ -144,7 +144,7 @@ once we get IOPS, throughput values we can check the correspodning VM Series tha
 ### 1:07:05 - last minute // Scenario: how to configure memory settings for STAND ALONE & CLUSTERED environments?
 
 Stand Alone:
-- we will allocate 15%-20% to OS & rest of 80% will be distributed to different SQL instances depending on the criticality & workloads on each instances (i.e for ex: test insnace: 50%, Dev instance: 30%)
+- we will allocate 15%-20% to OS & rest of 80% will be distributed to different SQL instances depending on the criticality & workloads on each instances (i.e for ex: test instance: 50%, Dev instance: 30%)
 
 Clustered servers:
 - For Nodes, N1 & N2 if they have different criticality scope like Prod(60%), Dev (20%), Operating system (20%). so even if there is failover scenario, Memory allocation will not have issues.

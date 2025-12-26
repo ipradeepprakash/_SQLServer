@@ -4,3 +4,6 @@ Interview Questions
 Answer: 
 - There will be lag/delay at the secondary.
 - If STANDY mode is chosen as restoring mode, then users have to be disconnected during restore of logs, which affects the reporting tasks for users.
+
+2) Can we consider Log shipping as reporting solution?
+    - Yes, but there will be delay while log backups restore. user connections will get killed, so user will have to connect again. lengthy reports are not suitable for log shipping.

@@ -4,7 +4,9 @@ Video: https://www.youtube.com/watch?v=kuqT_0yDd6o
 
 References: 
 
-How to Use CrystalDiskMark - https://www.youtube.com/watch?v=egQJl80J6VE
+> How to Use CrystalDiskMark - https://www.youtube.com/watch?v=egQJl80J6VE
+
+> How to Measure Storage Performance and IOPS on Windows - https://woshub.com/how-to-measure-disk-iops-using-powershell/
 
 
 ### Video Timeline
@@ -96,6 +98,14 @@ let's run the below queries & see what is captured in already running profiler
         > CyrstalDiskmark
 
         > SQLIOism
+
+the parameters that should be kept in mind for calculating Disk level perfmon counters
+
+    - Disk Sec/Transfer
+    - Disk Transfers/Sec
+    - Disk Bytes/Sec
+    - Split IO/Sec
+    - Avg. Disk Queue Length
 
 
 

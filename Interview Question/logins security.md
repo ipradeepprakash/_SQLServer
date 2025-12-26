@@ -17,3 +17,12 @@
 - No
 
 
+### Can we have DB owner as AD group?
+- No
+
+### Will sp_change_users_login report gives back orphan users at windows level?
+- No. sp_change_users_login will give orphan users at SQL level.
+but sp_validate_logins will give orphan logins at windows level.
+
+
+

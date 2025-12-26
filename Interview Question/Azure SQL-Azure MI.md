@@ -1,5 +1,30 @@
 
 # Interview Questions
 
-1. how many files are there on tempdb for PaaS (Azure MI & Azure SQL)
-   - 
+1. On Azure MI, how many tempdb files would be created?
+   - 12
+
+2. On Azure SQL, how many tempdb files would be created?
+   - Default is 2. but, it will get changed if we change the vCores that we choose.
+
+
+3. do we need to create HIGH AVAILABILITY for Managed instance? if so how?
+   - 2 things here
+   
+      for GENERAL purpose or BUSINESS CRITICAL TIER: NO need to create HA, its there Automatically for user. 
+      
+      For Business Critical, we get 4 Replicas from Microsoft by default. we are just doing Auto-failover for DR purpose.
+
+4. what is difference between GENERAL Purpose & BUSINESS Critical architectures
+      
+   - GENERAL purpose: is just like our Failover clusters. 
+         
+   - BUSINESS Critical: just like our AlwaysOn with 4 replicas (only 1 can be used for Reporting). 
+         
+   - w.r.t Storage: 
+       > locally associated with BUSINESS critical
+
+       > Remotely for General Purpose.
+
+
+       

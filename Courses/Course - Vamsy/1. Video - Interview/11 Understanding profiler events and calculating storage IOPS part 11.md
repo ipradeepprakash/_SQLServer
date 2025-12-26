@@ -4,11 +4,13 @@ Video: https://www.youtube.com/watch?v=kuqT_0yDd6o
 
 ### Video Timeline
 --------------
-0:00 - // set up a TRACE to understand problematic query or stored procedure.
+0:00 - 24:06// set up a TRACE to understand problematic query or stored procedure.
+24:08 - // Scenario: Migration from On-Prem to Azure VM, we need to calcuate the disk parameters like IOPS,Throughput at VM Level. how to calculate?
 
 
-### 0:00 - // set up a TRACE to understand problematic query or stored procedure.
+### 0:00 - 24:08// set up a TRACE to understand problematic query or stored procedure.
 Create a dummy procedure to simulate as a problematic query.
+
 
 **<U> Sample query</U>**
  
@@ -80,6 +82,9 @@ let's run the below queries & see what is captured in already running profiler
         - SP:Completed
 
      
+
+### 24:08 - // Scenario: Migration from On-Prem to Azure VM, we need to calcuate the disk parameters like IOPS,Throughput at VM Level. how to calculate?
+
 
 
 

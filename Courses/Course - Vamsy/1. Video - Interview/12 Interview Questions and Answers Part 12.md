@@ -3,6 +3,9 @@
 
 #### Video link: https://drive.google.com/file/d/1CrwPvZfliqzaY6iBz56ndtt86jcBhdt9/view?usp=drive_link
 
+#### Reference links:
+https://www.mssqltips.com/sqlservertip/3150/adding-sql-server-alwayson-availability-groups-to-existing-failover-clusters/
+
 #### Video timeline
 #### 0:00 - 2:15 // Question1: tell me about your experience with Always on and cluster installation.
 #### 2:17 - // 

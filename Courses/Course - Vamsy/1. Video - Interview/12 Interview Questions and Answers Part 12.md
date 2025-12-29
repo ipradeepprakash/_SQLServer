@@ -14,6 +14,7 @@ Question2: Suppoše we have 2 node SQL Server Clusters and another stand alone s
 ### Explanation
 #### 0:00 - 2:15 // 
 Question1: tell me about your experience with Always on and cluster installation.
+
 Answer1: you can tell like
 
       Always on was introduced in SQL server 2012 version and it is a replacement for mirroring and clustering. It is available for both HA & DR.
@@ -23,5 +24,6 @@ Answer1: you can tell like
 
 #### 2:17 - // 
 Question2: Suppoše we have 2 node SQL Server Clusters and another stand alone sql server instance, So can we create an Availability group? 
+
 Answer: 
 

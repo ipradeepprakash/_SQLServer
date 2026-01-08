@@ -25,5 +25,12 @@ Answer1: you can tell like
 #### 2:17 - // 
 Question2: Suppoše we have 2 node SQL Server Clusters and another stand alone sql server instance, So can we create an Availability group? 
 
-Answer: 
+Answer: we need to
+- Add always on features on existing cluster nodes and add failover cluster on secondary data center (assume Node 3).
+- Come to primary & add node in cluster configuration.
+- Now node 3 which is added to cluster should NOT be the owner of the current Failover cluster.
+- Why? Because if Node 3 is added, then we will get error while establishing AG from SSMS.
+
+- ![error 19405](https://i.sstatic.net/Y1DN1.png)
+
 
